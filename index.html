@@ -226,6 +226,7 @@ ul.rl li:before{content:'';position:absolute;left:2px;top:15px;width:9px;height:
  <div class="sub">Chủ nhật 11.10.2026 · 4 sân · mỗi bảng 1 sân</div>
  <div class="prog"><div id="pbar"></div></div>
  <div class="ptxt" id="ptxt"></div>
+ <div class="ptxt" id="ptxt2" style="font-weight:600;opacity:.85;margin-top:2px"></div>
 </header>
 <main id="main"></main>
 <nav id="nav">
@@ -585,6 +586,7 @@ function vBtc(){
   '<label class="f">Mã BTC (đã đặt trong Code.gs)</label><input class="tx1" id="skey" type="password" value="'+esc(S.key)+'" autocomplete="off">'+
   '<button class="btn mag" data-act="sheetsave">Lưu và kết nối</button>'+
   (u?'<div class="row2"><button class="btn alt" data-act="sheetsync" style="margin-top:9px">Đồng bộ ngay</button><button class="btn alt" data-act="sheettest" style="margin-top:9px">Kiểm tra</button></div>'+
+   '<button class="btn alt" data-act="sheetdiff" style="margin-top:9px">So sánh máy này với Sheet</button>'+
    '<button class="btn alt" data-act="sheetpush" style="margin-top:9px">Đẩy toàn bộ dữ liệu trên máy lên Sheet</button>':'')+
   (S.sheetUrl&&!hard?'<button class="btn bad" data-act="sheetoff">Ngắt kết nối Google Sheet</button>':'')+
   '<details><summary>Hướng dẫn tạo Google Sheet (làm 1 lần)</summary>'+
@@ -682,24 +684,51 @@ function finSave(){
  }
  persist();closeSheet();render();toast('Đã lưu');
 }
+function describe(id,r){
+ if(!r)return 'chưa có';
+ var m=/^([A-D])-(\d+)$/.exec(id);
+ if(m){var mm=gmatches(m[1])[+m[2]-1];return tname(mm.t1)+' '+r.a+'-'+r.b+' '+tname(mm.t2);}
+ if(KOM[id])return KOM[id].lab+': '+r.a+'-'+r.b;
+ if(id.indexOf('thu:')===0){var a=ATH.filter(function(x){return 'thu:'+x.id===id;})[0];return (a?a.name:id)+': đóng '+vnd(r.a||0)+(r.b?' + tài trợ '+vnd(r.b):'');}
+ if(id.indexOf('draw:')===0)return 'bốc thăm bảng '+id.slice(5);
+ return (r.p||id)+': '+vnd(r.a||0);
+}
+function diffSheet(){
+ var u=SURL();toast('Đang so sánh với Sheet...');
+ fetchJSON(u+(u.indexOf('?')<0?'?':'&')+'t='+Date.now(),{method:'GET'},12000).then(function(j){
+  var rows=(j.rows||[]).map(function(r){return r.map(function(c){return c==null?'':String(c);});});
+  var p=rowsToRes(rows),ids={},diffs=[];
+  [p.res,S.local].forEach(function(o){Object.keys(o).forEach(function(k){ids[k]=1;});});
+  Object.keys(ids).forEach(function(id){if(canon(S.local[id])!==canon(p.res[id]))diffs.push(id);});
+  var h='<div class="sh-t">Máy này và Google Sheet</div><div class="sh-s">Sheet ghi lần cuối: '+(fmtUpd(j.updated||p.updated)||'chưa có')+' · '+Object.keys(p.res).length+' mục trên Sheet, '+Object.keys(S.local).length+' mục trên máy</div>';
+  if(!diffs.length)h+='<div class="tie-set" style="margin-top:12px;border-color:#9be2bd"><b style="color:var(--ok)">Giống nhau 100%.</b> Người xem đang thấy đúng số liệu trên máy này.</div>';
+  else{
+   h+='<div class="alert" style="margin-top:12px">Có <b>'+diffs.length+'</b> mục khác nhau. Mục "Máy này" chưa lên Sheet nên người xem chưa thấy.</div>';
+   diffs.slice(0,25).forEach(function(id){h+='<div class="tie-set"><div style="font-size:12px;color:var(--mut);font-weight:700">'+esc(id)+'</div><div style="font-size:13.5px;font-weight:700;margin-top:3px">Máy này: '+esc(describe(id,S.local[id]))+'</div><div style="font-size:13.5px;font-weight:700;color:var(--mag)">Sheet: '+esc(describe(id,p.res[id]))+'</div></div>';});
+   if(diffs.length>25)h+='<p class="note">... và '+(diffs.length-25)+' mục khác.</p>';
+   h+='<button class="btn mag" data-act="sheetsync">Gửi lên Sheet ngay</button>';
+  }
+  h+='<button class="btn alt" data-act="close">Đóng</button>';
+  openSheet(h);
+ },function(e){toast('Không so sánh được: '+errMsg(e));});
+}
 function fmtUpd(iso){var d=new Date(iso);if(isNaN(d))return '';return hhmm(d.getTime())+' '+('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2);}
 function renderPill(){
- var sy=$('sync'),t,bad=false,u=SURL();
+ var sy=$('sync'),t,cls='',u=SURL();
  if(S.btc){
-  if(!u){t=S.saveErr?'Không lưu được':'BTC · lưu trên máy';bad=!!S.saveErr;}
+  if(!u){t=S.saveErr?'Không lưu được':'BTC · lưu trên máy';if(S.saveErr)cls='bad';}
   else{var n=changedIds().ups.length;
-   if(S.sync.st==='err'){t=n?'Mất mạng · '+n+' chờ gửi':'Mất kết nối';bad=true;}
-   else if(n)t='Đang gửi '+n;
+   if(S.sync.st==='err'){t=n?'Mất mạng · '+n+' chờ gửi':'Mất kết nối';cls='bad';}
+   else if(n)t='BTC · đang gửi '+n;
    else if(S.sync.st==='ok')t='BTC · đã đồng bộ';
    else t='BTC · đang kết nối';}
  }
- else if(S.remoteState==='ok')t=(S.sync.st==='err'?'Mất kết nối · ':'')+(S.updated&&fmtUpd(S.updated)?'Cập nhật '+fmtUpd(S.updated):'Đã tải '+hhmm(S.remoteAt));
+ else if(!u){t=S.remoteState==='empty'?'File CSV · chưa có kết quả':'File CSV';cls='warn';}
+ else if(S.sync.st==='err'){t=S.remoteState==='ok'?'Mất kết nối · bản cũ':'Chưa tải được dữ liệu';cls='bad';}
+ else if(S.remoteState==='ok')t='Xem trực tiếp';
  else if(S.remoteState==='empty')t='Chưa có kết quả';
- else if(S.remoteState==='err'){t='Chưa tải được dữ liệu';bad=true;}
  else t='Đang tải...';
- var warn=false;
- if(!u&&!S.btc){t='File CSV · '+t;warn=true;}
- sy.className='pill'+(bad?' bad':(warn?' warn':''));sy.lastChild.textContent=t;
+ sy.className='pill'+(cls?' '+cls:'');sy.lastChild.textContent=t;
  if(CACHE.A)renderHead();
 }
 function hms(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2);}
@@ -707,8 +736,12 @@ function renderHead(){
  var total=0;GROUPS.forEach(function(g){if(CACHE[g])total+=CACHE[g].count;});
  var ko=KO.filter(function(x){return has(x.id);}).length;
  $('pbar').style.width=((total+ko)/48*100)+'%';
- var last=S.pulledAt||S.remoteAt||0;
- $('ptxt').textContent='Vòng bảng '+total+'/40 trận · Vòng trong '+ko+'/8 trận'+(SURL()&&last?' · làm mới '+hms(last):'');
+ $('ptxt').textContent='Vòng bảng '+total+'/40 trận · Vòng trong '+ko+'/8 trận';
+ var u=SURL(),last=S.pulledAt||S.remoteAt||0,t2;
+ if(u)t2='Dữ liệu Sheet cập nhật '+(S.updated&&fmtUpd(S.updated)?fmtUpd(S.updated):'chưa có')+(last?' · làm mới '+hms(last):'');
+ else if(S.btc)t2='Chưa gắn Google Sheet · chỉ lưu trên máy này';
+ else t2='File CSV'+(S.updated&&fmtUpd(S.updated)?' xuất lúc '+fmtUpd(S.updated):'');
+ $('ptxt2').textContent=t2;
 }
 function refreshView(){
  if(document.querySelector('.ov.show')){S.dirtyView=true;renderPill();return;}
@@ -1312,7 +1345,8 @@ function act(a){
   },function(er){toast('Chưa kết nối được: '+errMsg(er));});}
  else if(a==='sheettest'){toast('Đang kiểm tra...');
   fetchJSON(SURL()+(SURL().indexOf('?')<0?'?':'&')+'action=ping',{method:'GET'},12000).then(function(){return sheetPost({action:'check'});}).then(function(){toast('Kết nối tốt, mã BTC đúng ✅');},function(er){toast('Lỗi: '+errMsg(er));});}
- else if(a==='sheetsync'){toast('Đang đồng bộ...');syncSheet().then(function(){if(S.sync.st==='ok')toast('Đã đồng bộ');});}
+ else if(a==='sheetsync'){closeSheet();toast('Đang đồng bộ...');syncSheet().then(function(){if(S.sync.st==='ok')toast('Đã đồng bộ');});}
+ else if(a==='sheetdiff')diffSheet();
  else if(a==='sheetpush'){if(!confirm('Ghi đè toàn bộ Google Sheet bằng dữ liệu trên máy này?'))return;
   toast('Đang gửi...');fullPush().then(function(){render();toast('Đã đẩy toàn bộ lên Sheet');},function(er){toast('Lỗi: '+errMsg(er));});}
  else if(a==='sheetoff'){if(!confirm('Ngắt kết nối Google Sheet? Dữ liệu trên máy vẫn giữ.'))return;
@@ -1352,7 +1386,7 @@ var hm=location.hash.match(/sheet=([^&]+)/);
 if(hm){try{S.sheetUrl=decodeURIComponent(hm[1]);localStorage.setItem(STORE+'-sheet',S.sheetUrl);history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}}
 if(S.btc&&SURL()&&!S.key){S.btc=false;S.res=S.remote;}
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-window.__app={refreshView:refreshView,syncSheet:syncSheet,changedIds:changedIds,fullPush:fullPush,SURL:SURL,finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
+window.__app={diffSheet:diffSheet,refreshView:refreshView,syncSheet:syncSheet,changedIds:changedIds,fullPush:fullPush,SURL:SURL,finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
 render();loadFonts();
 tick();
 function stale(ms){return Date.now()-(S.pulledAt||S.remoteAt||0)>ms;}
