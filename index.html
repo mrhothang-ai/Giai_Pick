@@ -173,6 +173,8 @@ ul.rl li:before{content:'';position:absolute;left:2px;top:15px;width:9px;height:
 .grps{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
 .grps div{border-radius:12px;background:var(--bg);padding:9px 11px;font-size:13px;font-weight:700;line-height:1.55}
 .grps b{display:block;font-size:14px;margin-bottom:2px}
+.tx1{width:100%;font-family:inherit;font-size:16px;font-weight:700;padding:12px 13px;border:2px solid var(--line);border-radius:13px;background:#fff;color:var(--pl);outline:0}
+.tx1:focus{border-color:var(--pl3)}
 .pin{display:flex;gap:8px;margin-top:10px}
 .pin input{flex:1;min-width:0;font-family:inherit;font-size:18px;font-weight:700;text-align:center;letter-spacing:4px;padding:12px;border:2px solid var(--line);border-radius:13px;outline:0;color:var(--pl);background:#fff}
 .pin button{background:var(--pl);color:var(--grn);font-weight:800;border-radius:13px;padding:0 20px;font-size:15px}
@@ -233,10 +235,10 @@ var KOM={};KO.forEach(function(m){KOM[m.id]=m;});
 var BTC_PIN='2010'; /* mã mở chế độ BTC, có thể đổi */
 var CSV_FILE='ketqua.csv';
 var GCOL={A:'#5b1a62',B:'#e90052',C:'#0a9a56',D:'#1b6fd1'};
-var S={res:{},local:{},remote:{},btc:false,sv:'all',q:'',updated:null,remoteAt:0,remoteState:'idle',device:'',tab:'sched',court:'A',rank:'A',savedAt:0};
+var S={csvName:'ketqua.csv',res:{},local:{},remote:{},btc:false,sv:'all',q:'',updated:null,remoteAt:0,remoteState:'idle',device:'',tab:'sched',court:'A',rank:'A',savedAt:0};
 
 /* ---------- lưu trên máy ---------- */
-function load(){try{var d=JSON.parse(localStorage.getItem(STORE)||'null');if(d){S.local=d.res||{};S.savedAt=d.savedAt||0;}S.btc=localStorage.getItem(STORE+'-btc')==='1';}catch(e){}S.res=S.btc?S.local:S.remote;}
+function load(){try{var d=JSON.parse(localStorage.getItem(STORE)||'null');if(d){S.local=d.res||{};S.savedAt=d.savedAt||0;}S.btc=localStorage.getItem(STORE+'-btc')==='1';S.csvName=localStorage.getItem(STORE+'-csvname')||'ketqua.csv';}catch(e){}S.res=S.btc?S.local:S.remote;}
 function persist(){S.savedAt=Date.now();try{localStorage.setItem(STORE,JSON.stringify({res:S.local,savedAt:S.savedAt}));return true;}catch(e){S.saveErr=true;return false;}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function $(id){return document.getElementById(id);}
@@ -491,11 +493,14 @@ function vBtc(){
  h+='<div class="btcbar">Đang ở chế độ BTC. Kết quả nhập được lưu trên máy này ('+n+' trận). Người xem chỉ thấy kết quả sau khi anh tải file '+CSV_FILE+' lên GitHub.</div>';
  h+='<div class="card"><b class="t">Cập nhật kết quả lên GitHub</b>'+
   '<div class="step"><b>1</b><span>Nhập tỉ số ở tab Lịch đấu hoặc Vòng trong.</span></div>'+
-  '<div class="step"><b>2</b><span>Bấm "Tải file CSV" bên dưới (hoặc "Gửi file CSV" để chuyển sang máy tính).</span></div>'+
+  '<div class="step"><b>2</b><span>Đặt tên file (nên giữ '+CSV_FILE+') rồi bấm "Lưu file CSV" để chọn nơi lưu.</span></div>'+
   '<div class="step"><b>3</b><span>Vào kho GitHub → Add file → Upload files → chọn file '+CSV_FILE+' (đặt cùng thư mục với trang này, ghi đè bản cũ) → Commit changes.</span></div>'+
   '<div class="step"><b>4</b><span>Đợi khoảng 1 phút, người xem sẽ tự thấy kết quả mới (trang tự làm mới 30 giây một lần).</span></div>'+
-  '<button class="btn mag" data-act="csvdl">Tải file CSV</button>'+
-  '<div class="row2"><button class="btn alt" data-act="csvshare" style="margin-top:9px">Gửi file CSV</button><button class="btn alt" data-act="csvcopy" style="margin-top:9px">Sao chép nội dung</button></div></div>';
+  '<label class="f">Tên file khi lưu</label><input class="tx1" id="csvn" type="text" value="'+esc(S.csvName)+'" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">'+
+  '<button class="btn mag" data-act="csvsave">Lưu file CSV (chọn nơi lưu)</button>'+
+  '<div class="row2"><button class="btn alt" data-act="csvdl" style="margin-top:9px">Tải thẳng</button><button class="btn alt" data-act="csvshare" style="margin-top:9px">Chia sẻ file</button></div>'+
+  '<button class="btn alt" data-act="csvcopy" style="margin-top:9px">Sao chép nội dung CSV</button>'+
+  '<p class="note" style="margin-top:10px">Máy tính (Chrome, Edge): hiện hộp thoại chọn thư mục và đổi tên. Điện thoại: hiện bảng chia sẻ, chọn "Lưu vào Tệp" (iPhone) hoặc Drive/Tệp (Android). Android Chrome còn có thể bật Cài đặt → Tải xuống → Hỏi nơi lưu mỗi lần. Khi up lên GitHub, tên file phải đúng là '+CSV_FILE+'.</p></div>';
  h+='<div class="card"><b class="t">Nạp CSV vào máy này</b><p class="note">Dùng khi đổi điện thoại hoặc muốn lấy lại dữ liệu đã đăng. Việc nạp sẽ thay toàn bộ kết quả đang có trên máy.</p>'+
   '<button class="btn alt" data-act="csvgh">Nạp từ '+CSV_FILE+' trên GitHub</button>'+
   '<button class="btn alt" data-act="csvfile">Chọn file CSV từ máy</button>'+
@@ -566,16 +571,51 @@ function parseCSV(text){
   res[id]={a:a,b:b,note:null};});
  return{res:res,updated:upd,count:Object.keys(res).length};
 }
-function csvFileObj(){try{return new File([toCSV()],CSV_FILE,{type:'text/csv'});}catch(e){return null;}}
-function dlCSV(){
- var blob=new Blob([toCSV()],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download=CSV_FILE;document.body.appendChild(a);a.click();document.body.removeChild(a);
- setTimeout(function(){URL.revokeObjectURL(url);},5000);toast('Đã tạo file '+CSV_FILE);
+function cleanName(v){
+ v=String(v||'').replace(/[\\\/:*?"<>|]+/g,'').trim();
+ if(!v)v=CSV_FILE;
+ if(!/\.csv$/i.test(v))v+='.csv';
+ return v;
+}
+function csvName(){
+ var el=$('csvn'),v=cleanName(el?el.value:S.csvName);
+ S.csvName=v;if(el)el.value=v;
+ try{localStorage.setItem(STORE+'-csvname',v);}catch(e){}
+ return v;
+}
+function csvFileObj(name){try{return new File([toCSV()],name||CSV_FILE,{type:'text/csv'});}catch(e){return null;}}
+function dlCSV(name,text){
+ name=name||csvName();text=text||toCSV();
+ var blob=new Blob([text],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(url);},5000);toast('Đã tải xuống '+name);
 }
 function shareCSV(){
- var f=csvFileObj();
- if(f&&navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share)navigator.share({files:[f],title:CSV_FILE}).catch(function(){});
- else{dlCSV();}
+ var name=csvName(),f=csvFileObj(name);
+ if(f&&navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share)navigator.share({files:[f],title:name}).catch(function(){});
+ else{dlCSV(name);}
+}
+function fallbackSave(name,text){
+ var n=prompt('Đặt tên file để lưu (đuôi .csv):',name);
+ if(n===null)return;
+ n=cleanName(n);S.csvName=n;try{localStorage.setItem(STORE+'-csvname',n);}catch(e){}
+ var el=$('csvn');if(el)el.value=n;
+ dlCSV(n,text);
+}
+function saveCSV(){
+ var name=csvName(),text=toCSV();
+ if(window.showSaveFilePicker){
+  window.showSaveFilePicker({suggestedName:name,types:[{description:'CSV',accept:{'text/csv':['.csv']}}]}).then(function(h){
+   return h.createWritable().then(function(w){return w.write(new Blob([text],{type:'text/csv'})).then(function(){return w.close();});}).then(function(){toast('Đã lưu '+(h.name||name));});
+  }).catch(function(e){if(e&&e.name==='AbortError')return;fallbackSave(name,text);});
+  return;
+ }
+ var f=csvFileObj(name);
+ if(f&&navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){
+  navigator.share({files:[f],title:name}).catch(function(e){if(e&&e.name==='AbortError')return;fallbackSave(name,text);});
+  return;
+ }
+ fallbackSave(name,text);
 }
 function importCSV(text,srcLabel){
  var p=parseCSV(text);
@@ -898,6 +938,7 @@ function act(a){
   if(!Object.keys(S.local).length&&Object.keys(S.remote).length){S.local=JSON.parse(JSON.stringify(S.remote));persist();toast('Đã mở chế độ BTC, lấy sẵn dữ liệu từ GitHub');}else toast('Đã mở chế độ BTC');
   S.res=S.local;S.tab='sched';render();}
  else if(a==='lock'){S.btc=false;try{localStorage.removeItem(STORE+'-btc');}catch(er){}S.res=S.remote;S.tab='sched';render();fetchRemote();toast('Đã khóa chế độ BTC');}
+ else if(a==='csvsave')saveCSV();
  else if(a==='csvdl')dlCSV();
  else if(a==='csvshare')shareCSV();
  else if(a==='csvcopy')copy(toCSV().replace(/^\uFEFF/,''),'Đã sao chép nội dung CSV');
@@ -918,13 +959,14 @@ document.addEventListener('input',function(e){
  if(e.target.id==='q'){S.q=e.target.value;var o=$('ovl');if(o)o.innerHTML=allHTML();}
 });
 document.addEventListener('change',function(e){
+ if(e.target.id==='csvn'){csvName();return;}
  if(e.target.id==='csvf'&&e.target.files&&e.target.files[0]){
   var rd=new FileReader();rd.onload=function(){importCSV(String(rd.result),'file');};rd.readAsText(e.target.files[0],'utf-8');}
 });
 /* ---------- khởi động ---------- */
 load();
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-window.__app={toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
+window.__app={saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
 render();loadFonts();
 if(!S.btc)fetchRemote();
 setInterval(function(){if(!S.btc&&document.visibilityState!=='hidden')fetchRemote();},30000);
