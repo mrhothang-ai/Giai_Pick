@@ -108,9 +108,9 @@ textarea.tx:focus{border-color:var(--pl3)}
 .btn.warn{background:var(--warn);color:#fff}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 ul.tips{padding-left:18px;font-size:13.5px;line-height:1.65;font-weight:600;margin-top:8px}
-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:520px;background:var(--pl);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:20}
-nav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;border-radius:12px;font-size:10.5px;font-weight:800;color:#b79ebd}
-nav button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:520px;background:var(--pl);display:grid;grid-template-columns:repeat(6,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:20}
+nav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;border-radius:12px;font-size:9.5px;font-weight:800;color:#b79ebd;letter-spacing:-.2px}
+nav button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav button.on{color:var(--grn)}
 nav button.on:after{content:'';width:22px;height:3px;border-radius:3px;background:var(--grn);margin-top:1px}
 .ov{position:fixed;inset:0;background:rgba(20,0,24,.7);z-index:50;display:none;align-items:flex-end;justify-content:center}
@@ -179,6 +179,43 @@ ul.rl li:before{content:'';position:absolute;left:2px;top:15px;width:9px;height:
 .pin input{flex:1;min-width:0;font-family:inherit;font-size:18px;font-weight:700;text-align:center;letter-spacing:4px;padding:12px;border:2px solid var(--line);border-radius:13px;outline:0;color:var(--pl);background:#fff}
 .pin button{background:var(--pl);color:var(--grn);font-weight:800;border-radius:13px;padding:0 20px;font-size:15px}
 .btcbar{background:var(--mag);color:#fff;border-radius:14px;padding:10px 13px;font-size:13px;font-weight:700;margin-bottom:12px;line-height:1.45}
+
+.seg3{grid-template-columns:1fr 1fr 1fr}
+.fin{border-bottom:5px solid var(--grn)}
+.fin-big{display:flex;justify-content:space-between;align-items:baseline;padding:2px 0 10px;border-bottom:1px solid rgba(255,255,255,.18)}
+.fin-big span{font-size:13px;font-weight:700;color:#d8c8dc}.fin-big b{font-size:30px;font-weight:800;color:var(--grn);letter-spacing:-.5px}
+.fin-3{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 0}
+.fin-3 span{display:block;font-size:12px;font-weight:700;color:#d8c8dc}.fin-3 b{font-size:19px;font-weight:800}
+.fin-l{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,.14);font-size:13.5px;font-weight:600;color:#efe3f2}
+.fin-l b{font-weight:800;color:#fff;white-space:nowrap}
+.bar{height:8px;background:rgba(255,255,255,.2);border-radius:9px;overflow:hidden;margin:4px 0 8px}
+.bar div{height:100%;background:var(--grn);border-radius:9px}
+.qrc{display:flex;gap:14px;align-items:center}
+.qrc img{width:150px;height:150px;border-radius:12px;border:1px solid var(--line);flex:none;background:#fff}
+.qrc dl{font-size:13px;font-weight:600;line-height:1.5}
+.qrc dt{color:var(--mut);font-size:11.5px;font-weight:700;margin-top:5px}.qrc dd{font-weight:800;word-break:break-word}
+.qrc .acc{font-size:17px;letter-spacing:.3px}
+.ft{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:10px}
+.fth,.ftr{display:grid;grid-template-columns:1fr 104px 92px;align-items:center;gap:6px;padding:9px 12px}
+.fth{background:var(--pl);color:#fff;font-size:11.5px;font-weight:800}.fth span+span{text-align:right}
+.ftg{background:#f6f1f8;padding:5px 12px;font-size:12px;font-weight:800;display:flex;align-items:center;gap:7px;border-top:1px solid var(--line)}
+.ftg i{width:10px;height:10px;border-radius:50%;display:block}
+.ftr{width:100%;text-align:left;border-top:1px solid var(--line);background:#fff}
+.who b{display:block;font-size:14.5px;font-weight:800;line-height:1.2}.who small{font-size:11px;color:var(--mut);font-weight:600}
+.amt{text-align:right;font-size:13px;font-weight:800}
+.amt.ok{color:var(--ok)}.amt.no{color:#a898ae;font-weight:600}.amt.sp{color:var(--mag)}
+.fe{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;width:100%;text-align:left;padding:10px 12px;border-top:1px solid var(--line);background:#fff}
+.fe:first-child{border-top:0}
+.fe b{display:block;font-size:14.5px;font-weight:800;line-height:1.25}.fe small{font-size:11.5px;color:var(--mut);font-weight:600}
+.fe .amt{font-size:14.5px;white-space:nowrap}
+.fh{display:flex;justify-content:space-between;background:var(--pl);color:#fff;padding:8px 12px;font-weight:800;font-size:13px}
+.fh em{font-style:normal;color:var(--grn)}
+.fin-in{width:100%;font-family:inherit;font-size:17px;font-weight:700;padding:12px 13px;border:2px solid var(--line);border-radius:13px;background:#fff;color:var(--pl);outline:0}
+.fin-in:focus{border-color:var(--mag)}
+.qk{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.qk button{background:var(--grn);color:var(--pl);font-weight:800;font-size:13px;padding:7px 12px;border-radius:99px}
+.qk button.z{background:#e9e1ee}
+.pv{font-size:12.5px;font-weight:700;color:var(--ok);margin-top:5px;min-height:18px}
 </style>
 </head>
 <body>
@@ -195,6 +232,7 @@ ul.rl li:before{content:'';position:absolute;left:2px;top:15px;width:9px;height:
  <button data-tab="rank"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Xếp hạng</button>
  <button data-tab="ko"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 14v4M8 21h8"/></svg>Vòng trong</button>
  <button data-tab="rules"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg>Thể lệ</button>
+ <button data-tab="fin"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.6 9.4c-.6-1-1.6-1.4-2.7-1.4-1.6 0-2.7.9-2.7 2.1 0 2.9 5.6 1.5 5.6 4.3 0 1.2-1.2 2.1-2.8 2.1-1.2 0-2.3-.6-2.9-1.6M12 6.5V8M12 16v1.5"/></svg>Tài chính</button>
  <button data-tab="btc"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>BTC</button>
 </nav>
 <input type="file" id="csvf" accept=".csv,text/csv,text/plain" style="display:none">
@@ -232,10 +270,28 @@ var KO=[
  {id:'H3B',lab:'Tranh hạng Ba',gi:'B',s1:{k:'l',m:'BK3'},s2:{k:'l',m:'BK4'}}
 ];
 var KOM={};KO.forEach(function(m){KOM[m.id]=m;});
+var ATH=[];GROUPS.forEach(function(g){TEAMS[g].forEach(function(t,i){var p=t.split(' - ');['a','b'].forEach(function(sd,k){ATH.push({id:g+(i+1)+sd,g:g,name:p[k],mate:p[1-k],team:t});});});});
+function vnd(n){n=Math.round(+n||0);var neg=n<0;n=Math.abs(n);return (neg?'−':'')+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'đ';}
+function num(v){var d=String(v==null?'':v).replace(/[^\d]/g,'');return d===''?null:parseInt(d,10);}
+function dmy(iso){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(iso||'');return m?m[3]+'/'+m[2]:(iso||'');}
+function finIds(prefix){return Object.keys(S.res).filter(function(k){return k.indexOf(prefix)===0;}).sort(function(x,y){return parseInt(x.split(':')[1],10)-parseInt(y.split(':')[1],10);});}
+function finCalc(){
+ var o={paid:0,paidN:0,spon:0,sponN:0,other:0,otherN:0,chi:0,chiN:0,unpaid:[]};
+ ATH.forEach(function(a){var r=S.res['thu:'+a.id];
+  if(r&&r.a>0){o.paid+=r.a;o.paidN++;}else o.unpaid.push(a);
+  if(r&&r.b>0){o.spon+=r.b;o.sponN++;}});
+ finIds('thukhac:').forEach(function(k){var r=S.res[k];if(r&&r.a>0){o.other+=r.a;o.otherN++;}});
+ finIds('chi:').forEach(function(k){var r=S.res[k];if(r&&r.a>0){o.chi+=r.a;o.chiN++;}});
+ o.income=o.paid+o.spon+o.other;o.balance=o.income-o.chi;o.expected=ATH.length*FIN_FEE;
+ return o;
+}
+var QR_SRC='data:image/png;base64,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';
+var BANK={name:'DONG THI DUNG',acc:'102004111770',bank:'VietinBank - CN Bắc Giang - Hội sở'};
+var FIN_FEE=300000;
 var BTC_PIN='2010'; /* mã mở chế độ BTC, có thể đổi */
 var CSV_FILE='ketqua.csv';
 var GCOL={A:'#5b1a62',B:'#e90052',C:'#0a9a56',D:'#1b6fd1'};
-var S={csvName:'ketqua.csv',res:{},local:{},remote:{},btc:false,sv:'all',q:'',updated:null,remoteAt:0,remoteState:'idle',device:'',tab:'sched',court:'A',rank:'A',savedAt:0};
+var S={csvName:'ketqua.csv',res:{},local:{},remote:{},btc:false,sv:'all',q:'',ff:'all',updated:null,remoteAt:0,remoteState:'idle',device:'',tab:'sched',court:'A',rank:'A',savedAt:0};
 
 /* ---------- lưu trên máy ---------- */
 function load(){try{var d=JSON.parse(localStorage.getItem(STORE)||'null');if(d){S.local=d.res||{};S.savedAt=d.savedAt||0;}S.btc=localStorage.getItem(STORE+'-btc')==='1';S.csvName=localStorage.getItem(STORE+'-csvname')||'ketqua.csv';}catch(e){}S.res=S.btc?S.local:S.remote;}
@@ -489,8 +545,8 @@ function vBtc(){
    '<div class="pin"><input id="pin" type="password" inputmode="numeric" placeholder="Mã BTC" autocomplete="off"><button data-act="unlock">Mở</button></div></div>';
   return h;
  }
- var n=Object.keys(S.local).filter(function(k){return k.indexOf('draw:')!==0;}).length;
- h+='<div class="btcbar">Đang ở chế độ BTC. Kết quả nhập được lưu trên máy này ('+n+' trận). Người xem chỉ thấy kết quả sau khi anh tải file '+CSV_FILE+' lên GitHub.</div>';
+ var n=Object.keys(S.local).filter(function(k){return /^[A-D]-\d+$/.test(k)||/^(BK|CK|H3)/.test(k);}).length;
+ h+='<div class="btcbar">Đang ở chế độ BTC. Dữ liệu nhập được lưu trên máy này ('+n+' trận đã có tỉ số, cùng số liệu tài chính). Người xem chỉ thấy kết quả sau khi anh tải file '+CSV_FILE+' lên GitHub.</div>';
  h+='<div class="card"><b class="t">Cập nhật kết quả lên GitHub</b>'+
   '<div class="step"><b>1</b><span>Nhập tỉ số ở tab Lịch đấu hoặc Vòng trong.</span></div>'+
   '<div class="step"><b>2</b><span>Đặt tên file (nên giữ '+CSV_FILE+') rồi bấm "Lưu file CSV" để chọn nơi lưu.</span></div>'+
@@ -508,8 +564,91 @@ function vBtc(){
   '<button class="btn alt" data-act="csvpaste">Nạp từ nội dung dán</button></div>';
  h+='<div class="card"><b class="t">Chia sẻ</b><button class="btn alt" data-act="copysum" style="margin-top:9px">Sao chép kết quả dạng chữ (gửi Zalo)</button></div>';
  h+='<div class="card"><b class="t">Khác</b><p class="note">'+(S.saveErr?'Không lưu được vào bộ nhớ trình duyệt (có thể đang ở chế độ ẩn danh).':'Lần lưu cuối trên máy: '+(S.savedAt?hhmm(S.savedAt):'chưa có')+'. Không xóa dữ liệu trình duyệt và không dùng chế độ ẩn danh khi nhập.')+'</p>'+
-  '<button class="btn alt" data-act="lock">Khóa chế độ BTC</button><button class="btn bad" data-act="wipe">Xóa toàn bộ kết quả trên máy</button></div>';
+  '<button class="btn alt" data-act="lock">Khóa chế độ BTC</button><button class="btn bad" data-act="wipe">Xóa toàn bộ dữ liệu trên máy</button></div>';
  return h;
+}
+
+function finRow(a){
+ var r=S.res['thu:'+a.id],paid=r&&r.a>0,sp=r&&r.b>0;
+ return '<button class="ftr"'+(S.btc?' data-fin="thu:'+a.id+'"':'')+'><div class="who"><b>'+esc(a.name)+'</b><small>cùng '+esc(a.mate)+(r&&r.note?' · '+esc(r.note):'')+'</small></div>'+
+  '<div class="amt '+(paid?'ok':'no')+'">'+(paid?'✓ '+vnd(r.a):'Chưa đóng')+'</div><div class="amt '+(sp?'sp':'no')+'">'+(sp?'+'+vnd(r.b):'–')+'</div></button>';
+}
+function entryRows(prefix){
+ var ids=finIds(prefix);if(!ids.length)return '<div class="note" style="padding:12px;text-align:center">Chưa có khoản nào</div>';
+ return ids.map(function(k){var r=S.res[k];
+  return '<button class="fe"'+(S.btc?' data-fin="'+k+'"':'')+'><div><b>'+esc(r.p||'(không tên)')+'</b><small>'+(r.q?dmy(r.q):'')+(r.note?(r.q?' · ':'')+esc(r.note):'')+'</small></div><div class="amt '+(prefix==='chi:'?'sp':'ok')+'">'+(prefix==='chi:'?'−':'+')+vnd(r.a)+'</div></button>';}).join('');
+}
+function vFin(){
+ var f=finCalc();
+ var h='<div class="sec"><h2>Tài chính</h2><button class="shot" data-shot="fin:">'+CAM+'Chụp ảnh</button></div>';
+ h+='<div class="podium fin"><div class="fin-big"><span>Số dư hiện tại</span><b>'+vnd(f.balance)+'</b></div>'+
+  '<div class="fin-3"><div><span>Tổng thu</span><b>'+vnd(f.income)+'</b></div><div><span>Tổng chi</span><b>'+vnd(f.chi)+'</b></div></div>'+
+  '<div class="fin-l"><span>Vận động viên đã đóng ('+f.paidN+'/'+ATH.length+')</span><b>'+vnd(f.paid)+'</b></div>'+
+  '<div class="bar"><div style="width:'+Math.min(100,f.paidN/ATH.length*100)+'%"></div></div>'+
+  '<div class="fin-l"><span>Tài trợ thêm ('+f.sponN+' lượt)</span><b>'+vnd(f.spon)+'</b></div>'+
+  '<div class="fin-l"><span>Thu khác / tài trợ ngoài ('+f.otherN+' khoản)</span><b>'+vnd(f.other)+'</b></div>'+
+  '<div class="fin-l"><span>Dự kiến thu '+ATH.length+' người × '+vnd(FIN_FEE)+'</span><b>'+vnd(f.expected)+'</b></div></div>';
+ h+='<div class="card"><b class="t">Nộp tiền bằng mã QR</b><p class="note" style="margin:4px 0 10px">Mỗi vận động viên đóng '+vnd(FIN_FEE)+' (chi phí giải và ăn uống sinh hoạt). Nội dung chuyển khoản: Open2010 + tên của bạn.</p>'+
+  '<div class="qrc"><img src="'+QR_SRC+'" alt="Mã QR VietinBank"><dl><dt>Chủ tài khoản</dt><dd>'+BANK.name+'</dd><dt>Số tài khoản</dt><dd class="acc">'+BANK.acc+'</dd><dt>Ngân hàng</dt><dd>'+BANK.bank+'</dd></dl></div>'+
+  '<button class="btn alt" data-act="copyacc">Sao chép số tài khoản</button></div>';
+ var ff=S.ff;
+ h+='<div class="seg seg3" style="margin-top:4px">'+[['all','Tất cả'],['paid','Đã đóng'],['unpaid','Chưa đóng']].map(function(x){return '<button data-ff="'+x[0]+'" class="'+(ff===x[0]?'on':'')+'">'+x[1]+'</button>';}).join('')+'</div>';
+ h+='<div class="sec"><h2 style="font-size:18px">Vận động viên đóng góp</h2><span class="m">'+f.paidN+' đã đóng · '+f.unpaid.length+' chưa</span></div>';
+ h+='<div class="ft"><div class="fth"><span>Vận động viên</span><span>Đã đóng</span><span>Tài trợ thêm</span></div>';
+ GROUPS.forEach(function(g){
+  var list=ATH.filter(function(a){if(a.g!==g)return false;var r=S.res['thu:'+a.id],p=r&&r.a>0;return ff==='all'||(ff==='paid'&&p)||(ff==='unpaid'&&!p);});
+  if(!list.length)return;
+  h+='<div class="ftg"><i style="background:'+GCOL[g]+'"></i>Bảng '+g+' · Sân '+(GROUPS.indexOf(g)+1)+'</div>'+list.map(finRow).join('');
+ });
+ h+='</div>';
+ h+='<div class="ft"><div class="fh"><span>Thu khác / tài trợ ngoài</span><em>'+vnd(f.other)+'</em></div>'+entryRows('thukhac:')+'</div>';
+ if(S.btc)h+='<button class="btn alt" style="margin:-2px 0 12px" data-fin="thukhac:new">+ Thêm khoản thu khác</button>';
+ h+='<div class="ft"><div class="fh"><span>Các khoản chi</span><em>'+vnd(f.chi)+'</em></div>'+entryRows('chi:')+'</div>';
+ if(S.btc)h+='<button class="btn alt" style="margin:-2px 0 12px" data-fin="chi:new">+ Thêm khoản chi</button>';
+ else h+='<p class="note">Số liệu cập nhật theo file ketqua.csv do Ban tổ chức đăng.</p>';
+ return h;
+}
+/* ---- nhập thu chi (BTC) ---- */
+function qk(list,target){return '<div class="qk">'+list.map(function(x){return '<button class="'+(x[1]===0?'z':'')+'" data-fq="'+target+':'+x[1]+'">'+x[0]+'</button>';}).join('')+'</div>';}
+function openFin(id){
+ var isNew=/:new$/.test(id),kind=id.split(':')[0],r,title;
+ if(isNew){var n=0;finIds(kind+':').forEach(function(k){n=Math.max(n,parseInt(k.split(':')[1],10));});id=kind+':'+(n+1);r=null;}
+ else r=S.res[id]||null;
+ D={fin:true,id:id,kind:kind,isNew:isNew};
+ if(kind==='thu'){
+  var a=ATH.filter(function(x){return 'thu:'+x.id===id;})[0];if(!a)return;
+  D.ath=a;
+  openSheet('<div class="sh-t">'+esc(a.name)+'</div><div class="sh-s">Bảng '+a.g+' · cùng '+esc(a.mate)+'</div>'+
+   '<div class="tb"><div class="nm">Đã đóng (đ)</div><input class="fin-in" id="f_a" inputmode="numeric" value="'+(r&&r.a>0?r.a:'')+'" placeholder="0">'+qk([['300.000',300000],['Chưa đóng',0]],'f_a')+'<div class="pv" id="pv_a"></div></div>'+
+   '<div class="tb"><div class="nm">Tài trợ thêm (đ)</div><input class="fin-in" id="f_b" inputmode="numeric" value="'+(r&&r.b>0?r.b:'')+'" placeholder="0">'+qk([['100.000',100000],['200.000',200000],['500.000',500000],['Không',0]],'f_b')+'<div class="pv" id="pv_b"></div></div>'+
+   '<div class="tb"><div class="nm">Ghi chú</div><input class="fin-in" id="f_n" type="text" value="'+esc(r&&r.note||'')+'" placeholder="VD: chuyển khoản, tiền mặt"></div>'+
+   '<button class="btn" data-act="finsave">Lưu</button><button class="btn alt" data-act="close">Đóng</button>');
+ }else{
+  var lab=kind==='chi'?['Khoản chi','VD: Thuê sân, nước uống, cúp, huy chương']:['Nguồn thu / nhà tài trợ','VD: Công ty ABC, anh Nam'];
+  var today=new Date(),iso=today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
+  openSheet('<div class="sh-t">'+(isNew?'Thêm ':'Sửa ')+(kind==='chi'?'khoản chi':'khoản thu khác')+'</div><div class="sh-s">Số tiền ghi bằng đồng, không cần dấu chấm</div>'+
+   '<div class="tb"><div class="nm">'+lab[0]+'</div><input class="fin-in" id="f_p" type="text" value="'+esc(r&&r.p||'')+'" placeholder="'+lab[1]+'"></div>'+
+   '<div class="tb"><div class="nm">Số tiền (đ)</div><input class="fin-in" id="f_a" inputmode="numeric" value="'+(r&&r.a>0?r.a:'')+'" placeholder="0"><div class="pv" id="pv_a"></div></div>'+
+   '<div class="tb"><div class="nm">Ngày</div><input class="fin-in" id="f_q" type="date" value="'+esc(r&&r.q||iso)+'"></div>'+
+   '<div class="tb"><div class="nm">Ghi chú</div><input class="fin-in" id="f_n" type="text" value="'+esc(r&&r.note||'')+'" placeholder="Không bắt buộc"></div>'+
+   '<button class="btn" data-act="finsave">Lưu</button>'+(r?'<button class="btn bad" data-act="findel">Xóa khoản này</button>':'')+'<button class="btn alt" data-act="close">Đóng</button>');
+ }
+ pvUpd();
+}
+function pvUpd(){['a','b'].forEach(function(k){var el=$('f_'+k),pv=$('pv_'+k);if(el&&pv){var v=num(el.value);pv.textContent=v?'= '+vnd(v):'';}});}
+function finSave(){
+ var id=D.id,kind=D.kind,a=num($('f_a').value),note=($('f_n').value||'').trim();
+ if(kind==='thu'){
+  var b=num($('f_b').value);
+  if(!(a>0)&&!(b>0)&&!note){delete S.res[id];}
+  else S.res[id]={a:a>0?a:null,b:b>0?b:null,note:note};
+ }else{
+  var p=($('f_p').value||'').trim();
+  if(!p){toast('Nhập tên khoản');return;}
+  if(!(a>0)){toast('Nhập số tiền lớn hơn 0');return;}
+  S.res[id]={a:a,b:null,note:note,p:p,q:($('f_q').value||'')};
+ }
+ persist();closeSheet();render();toast('Đã lưu');
 }
 function fmtUpd(iso){var d=new Date(iso);if(isNaN(d))return '';return hhmm(d.getTime())+' '+('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2);}
 function renderPill(){
@@ -524,7 +663,7 @@ function renderPill(){
 function render(){
  recalc();
  var tab=S.tab,y=window.pageYOffset;
- $('main').innerHTML=tab==='sched'?vSched():tab==='rank'?vRank():tab==='ko'?vKo():tab==='rules'?vRules():vBtc();
+ $('main').innerHTML=tab==='sched'?vSched():tab==='rank'?vRank():tab==='ko'?vKo():tab==='rules'?vRules():tab==='fin'?vFin():vBtc();
  Array.prototype.forEach.call($('nav').children,function(b){if(b.tagName==='BUTTON')b.classList.toggle('on',b.getAttribute('data-tab')===tab);});
  var total=0;GROUPS.forEach(function(g){total+=CACHE[g].count;});
  var ko=KO.filter(function(x){return has(x.id);}).length;
@@ -544,6 +683,9 @@ function toCSV(){
  KO.forEach(function(m){var a=slot(m.s1),b=slot(m.s2),r=S.res[m.id];
   rows.push([m.id,'Giải '+m.gi+' - '+m.lab,a.team?tname(a.team):a.label,b.team?tname(b.team):b.label,r&&r.a!=null?r.a:'',r&&r.b!=null?r.b:'','']);});
  GROUPS.forEach(function(g){var r=S.res['draw:'+g];if(r&&r.note)rows.push(['draw:'+g,'Bốc thăm bảng '+g,'','','','',r.note]);});
+ ATH.forEach(function(a){var r=S.res['thu:'+a.id];rows.push(['thu:'+a.id,'Thu VĐV - Bảng '+a.g,a.name,a.team,r&&r.a>0?r.a:'',r&&r.b>0?r.b:'',r&&r.note||'']);});
+ finIds('thukhac:').forEach(function(k){var r=S.res[k];rows.push([k,'Thu khác / tài trợ ngoài',r.p||'',r.q||'',r.a||'','',r.note||'']);});
+ finIds('chi:').forEach(function(k){var r=S.res[k];rows.push([k,'Chi',r.p||'',r.q||'',r.a||'','',r.note||'']);});
  rows.push(['meta:updated','Thời điểm xuất file',new Date().toISOString(),'','','','']);
  return '\uFEFF'+rows.map(function(r){return r.map(csvq).join(',');}).join('\r\n')+'\r\n';
 }
@@ -565,6 +707,15 @@ function parseCSV(text){
  rows.forEach(function(r){var id=(r[I.ma]||'').trim();if(!id)return;
   if(id==='meta:updated'){upd=(r[I.d1]||'').trim();return;}
   if(id.indexOf('draw:')===0){var nt=(r[I.n]||'').trim();if(nt&&/^draw:[A-D]$/.test(id))res[id]={a:null,b:null,note:nt};return;}
+  var fm=/^(thu|thukhac|chi):(.+)$/.exec(id);
+  if(fm){
+   if(fm[1]==='thu'&&!ATH.some(function(x){return x.id===fm[2];}))return;
+   if(fm[1]!=='thu'&&!/^\d+$/.test(fm[2]))return;
+   var ma=num(r[I.a]),mb=num(r[I.b]),nt2=(r[I.n]||'').trim();
+   if(fm[1]==='thu'){if(!(ma>0)&&!(mb>0)&&!nt2)return;res[id]={a:ma>0?ma:null,b:mb>0?mb:null,note:nt2};}
+   else{if(!(ma>0))return;res[id]={a:ma,b:null,note:nt2,p:(r[I.d1]||'').trim(),q:(r[I.d1+1]||'').trim()};}
+   return;
+  }
   if(!(/^[A-D]-([1-9]|10)$/.test(id)||KOM[id]))return;
   var a=parseInt(r[I.a],10),b=parseInt(r[I.b],10);
   if(isNaN(a)||isNaN(b)||a<0||b<0||a>19||b>19||a===b)return;
@@ -836,6 +987,43 @@ function bodyKo(c,W,y){
  });
  return y;
 }
+function bodyFin(c,W,y){
+ var f=finCalc(),x=40,w=W-80;
+ var cw=(w-40)/3,cards=[['Tổng thu',vnd(f.income),'#fff',PAL.pl],['Tổng chi',vnd(f.chi),'#fff',PAL.pl],['Số dư',vnd(f.balance),PAL.pl,PAL.grn]];
+ cards.forEach(function(k,i){var cx=x+i*(cw+20);
+  var g=c.createLinearGradient(cx,y,cx+cw,y+150);if(i===2){g.addColorStop(0,PAL.pl3);g.addColorStop(1,PAL.pl2);c.fillStyle=g;}else c.fillStyle='#fff';
+  rr(c,cx,y,cw,150,20);c.fill();
+  T(c,k[0],cx+cw/2,y+42,24,700,i===2?'#d8c8dc':PAL.mut,'center');
+  T(c,k[1],cx+cw/2,y+96,i===2?40:36,800,i===2?PAL.grn:PAL.pl,'center',cw-24);});
+ y+=176;
+ var lines=[['Vận động viên đã đóng ('+f.paidN+'/'+ATH.length+' người)',vnd(f.paid)],['Tài trợ thêm ('+f.sponN+' lượt)',vnd(f.spon)],['Thu khác / tài trợ ngoài ('+f.otherN+' khoản)',vnd(f.other)]];
+ c.fillStyle='#fff';rr(c,x,y,w,lines.length*66+20,20);c.fill();
+ lines.forEach(function(l,i){var yy=y+10+i*66+33;if(i>0){c.fillStyle=PAL.line;c.fillRect(x+24,yy-33,w-48,2);}
+  T(c,l[0],x+28,yy,27,700,PAL.pl,'left',w-300);T(c,l[1],x+w-28,yy,30,800,PAL.pl,'right');});
+ y+=lines.length*66+44;
+ // chi
+ c.fillStyle=PAL.pl;rr(c,x,y,w,56,16);c.fill();T(c,'Các khoản chi',x+24,y+28,27,800,'#fff','left');T(c,vnd(f.chi),x+w-24,y+28,27,800,PAL.grn,'right');y+=66;
+ var ids=finIds('chi:');
+ if(!ids.length){c.fillStyle='#fff';rr(c,x,y,w,80,16);c.fill();T(c,'Chưa có khoản chi',x+w/2,y+40,25,600,PAL.mut,'center');y+=96;}
+ else{c.fillStyle='#fff';rr(c,x,y,w,ids.length*78+8,16);c.fill();
+  ids.forEach(function(k,i){var r=S.res[k],yy=y+4+i*78+39;if(i>0){c.fillStyle=PAL.line;c.fillRect(x+24,yy-39,w-48,2);}
+   T(c,r.p||'(không tên)',x+28,yy-(r.q||r.note?9:0),27,800,PAL.pl,'left',w-330);
+   if(r.q||r.note)T(c,(r.q?dmy(r.q):'')+(r.note?(r.q?' · ':'')+r.note:''),x+28,yy+19,20,600,PAL.mut,'left',w-330);
+   T(c,'−'+vnd(r.a),x+w-28,yy,28,800,PAL.mag,'right');});
+  y+=ids.length*78+28;}
+ // chưa đóng
+ c.fillStyle=PAL.pl;rr(c,x,y,w,56,16);c.fill();T(c,'Chưa đóng '+vnd(FIN_FEE)+' ('+f.unpaid.length+' người)',x+24,y+28,27,800,'#fff','left');y+=66;
+ if(!f.unpaid.length){c.fillStyle='#fff';rr(c,x,y,w,80,16);c.fill();T(c,'Tất cả đã đóng đủ',x+w/2,y+40,26,800,PAL.ok||'#0a9a56','center');y+=96;}
+ else{
+  var px=x+20,py=y+18,rowH=58,chips=[];
+  c.font='700 24px '+FONT;
+  f.unpaid.forEach(function(a){chips.push({t:a.name+' ('+a.g+')',w:c.measureText(a.name+' ('+a.g+')').width+34});});
+  var lines2=[[]],cur=0;chips.forEach(function(ch){if(cur+ch.w>w-40&&lines2[lines2.length-1].length){lines2.push([]);cur=0;}lines2[lines2.length-1].push(ch);cur+=ch.w+12;});
+  var bh=lines2.length*rowH+36;c.fillStyle='#fff';rr(c,x,y,w,bh,16);c.fill();
+  lines2.forEach(function(ln,li){var cx=px;ln.forEach(function(ch){c.fillStyle='#f3e9f6';rr(c,cx,py+li*rowH,ch.w,44,22);c.fill();T(c,ch.t,cx+ch.w/2,py+li*rowH+22,24,700,PAL.pl,'center');cx+=ch.w+12;});});
+  y+=bh+16;}
+ return y;
+}
 var IMG_FONTS_OK=false;
 function loadFonts(){
  var s='ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ ÁÀẢÃẠ';
@@ -847,12 +1035,13 @@ function composeImage(kind,arg){
  if(kind==='court'){title='Sân '+(GROUPS.indexOf(arg)+1)+' · Bảng '+arg;sub='Kết quả vòng bảng · Giải '+GIAI[arg];}
  else if(kind==='group'){title='Bảng '+arg+' · Bảng xếp hạng';sub='Vòng bảng · Giải '+GIAI[arg];}
  else if(kind==='all'){title='Bảng xếp hạng 4 bảng';sub='Vòng bảng · Giải A (bảng A, B) và Giải B (bảng C, D)';}
+ else if(kind==='fin'){title='Tình hình thu chi';sub='Cập nhật '+hhmm(Date.now());}
  else{title='Vòng trong';sub='Bán kết · Chung kết · Tranh hạng Ba';}
  function paint(c,H){
   if(H){c.fillStyle='#f1edf4';c.fillRect(0,0,W,H);}
   var y=imgHeader(c,W,title,sub);
   y+=10;
-  y=kind==='court'?bodyCourt(c,W,y,arg):kind==='group'?bodyGroup(c,W,y,arg):kind==='all'?bodyAll(c,W,y):bodyKo(c,W,y);
+  y=kind==='court'?bodyCourt(c,W,y,arg):kind==='group'?bodyGroup(c,W,y,arg):kind==='all'?bodyAll(c,W,y):kind==='fin'?bodyFin(c,W,y):bodyKo(c,W,y);
   y=imgFooter(c,W,y);
   return y;
  }
@@ -901,16 +1090,20 @@ function summary(){
  KO.forEach(function(m){var a=slot(m.s1).team,b=slot(m.s2).team;if(a&&b){var r=S.res[m.id];L.push('Giải '+m.gi+' '+m.lab+': '+tname(a)+' '+(has(m.id)?r.a+'-'+r.b:'vs')+' '+tname(b));}});
  ['A','B'].forEach(function(gi){var p=podium(gi);if(p.gold||p.bronze){L.push('','GIẢI '+gi);
   if(p.gold)L.push('🥇 '+tname(p.gold));if(p.silver)L.push('🥈 '+tname(p.silver));if(p.bronze)L.push('🥉 '+tname(p.bronze));}});
+ var f=finCalc();L.push('','TÀI CHÍNH','Thu: '+vnd(f.income)+' (VĐV '+f.paidN+'/'+ATH.length+' người '+vnd(f.paid)+', tài trợ thêm '+vnd(f.spon)+', thu khác '+vnd(f.other)+')','Chi: '+vnd(f.chi),'Số dư: '+vnd(f.balance));
  return L.join('\n');
 }
 
 /* ---------- sự kiện ---------- */
 document.addEventListener('click',function(e){
  if(e.target===$('ov')){closeSheet();return;}
- var t=e.target.closest('[data-sv],[data-tab],[data-court],[data-rank],[data-open],[data-ko],[data-draw],[data-st],[data-act],[data-mv],[data-shuf],[data-shot]');
+ var t=e.target.closest('[data-fin],[data-ff],[data-fq],[data-sv],[data-tab],[data-court],[data-rank],[data-open],[data-ko],[data-draw],[data-st],[data-act],[data-mv],[data-shuf],[data-shot]');
  if(!t)return;
  var d=t.dataset;
- if(d.sv){S.sv=d.sv;render();}
+ if(d.fin){openFin(d.fin);}
+ else if(d.ff){S.ff=d.ff;render();}
+ else if(d.fq){var qp=d.fq.split(':'),qe=$(qp[0]);if(qe){qe.value=qp[1]==='0'?'':qp[1];pvUpd();}}
+ else if(d.sv){S.sv=d.sv;render();}
  else if(d.tab){S.tab=d.tab;render();window.scrollTo(0,0);}
  else if(d.court){S.court=d.court;render();}
  else if(d.rank){S.rank=d.rank;render();}
@@ -938,6 +1131,9 @@ function act(a){
   if(!Object.keys(S.local).length&&Object.keys(S.remote).length){S.local=JSON.parse(JSON.stringify(S.remote));persist();toast('Đã mở chế độ BTC, lấy sẵn dữ liệu từ GitHub');}else toast('Đã mở chế độ BTC');
   S.res=S.local;S.tab='sched';render();}
  else if(a==='lock'){S.btc=false;try{localStorage.removeItem(STORE+'-btc');}catch(er){}S.res=S.remote;S.tab='sched';render();fetchRemote();toast('Đã khóa chế độ BTC');}
+ else if(a==='finsave')finSave();
+ else if(a==='findel'){delete S.res[D.id];persist();closeSheet();render();toast('Đã xóa khoản');}
+ else if(a==='copyacc')copy(BANK.acc,'Đã sao chép số tài khoản');
  else if(a==='csvsave')saveCSV();
  else if(a==='csvdl')dlCSV();
  else if(a==='csvshare')shareCSV();
@@ -946,7 +1142,7 @@ function act(a){
  else if(a==='csvfile'){$('csvf').value='';$('csvf').click();}
  else if(a==='csvpaste'){var tv=$('csvt').value;if(!tv.trim()){toast('Chưa dán nội dung');return;}importCSV(tv,'nội dung dán');}
  else if(a==='wipe'){
-  var v=prompt('Gõ XOA để xóa toàn bộ kết quả trên máy này');if(v==null||v.trim().toUpperCase()!=='XOA')return;
+  var v=prompt('Gõ XOA để xóa toàn bộ kết quả và số liệu tài chính trên máy này');if(v==null||v.trim().toUpperCase()!=='XOA')return;
   S.local={};S.res=S.local;persist();render();toast('Đã xóa toàn bộ');}
 }
 document.addEventListener('input',function(e){
@@ -956,6 +1152,7 @@ document.addEventListener('input',function(e){
 });
 
 document.addEventListener('input',function(e){
+ if(e.target.id==='f_a'||e.target.id==='f_b'){pvUpd();return;}
  if(e.target.id==='q'){S.q=e.target.value;var o=$('ovl');if(o)o.innerHTML=allHTML();}
 });
 document.addEventListener('change',function(e){
@@ -966,7 +1163,7 @@ document.addEventListener('change',function(e){
 /* ---------- khởi động ---------- */
 load();
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-window.__app={saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
+window.__app={finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
 render();loadFonts();
 if(!S.btc)fetchRemote();
 setInterval(function(){if(!S.btc&&document.visibilityState!=='hidden')fetchRemote();},30000);
