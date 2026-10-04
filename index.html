@@ -113,7 +113,7 @@ nav button{display:flex;flex-direction:column;align-items:center;gap:3px;padding
 nav button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav button.on{color:var(--grn)}
 nav button.on:after{content:'';width:22px;height:3px;border-radius:3px;background:var(--grn);margin-top:1px}
-.ov{position:fixed;inset:0;background:rgba(20,0,24,.7);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(20,0,24,.7);z-index:50;display:none;align-items:flex-end;justify-content:center}
 .ov.show{display:flex}
 .sheet{background:var(--bg);width:100%;max-width:520px;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));max-height:94vh;overflow:auto;animation:up .2s ease-out}
 @keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
@@ -220,7 +220,7 @@ ul.rl li:before{content:'';position:absolute;left:2px;top:15px;width:9px;height:
 </head>
 <body>
 <header class="hd">
- <div class="eb"><small>Pickleball · Sân Pic</small><div id="sync" class="pill"><i></i><span>Đang tải...</span></div></div>
+ <div class="eb"><small>Pickleball · Sân Pic</small><div id="sync" class="pill" data-act="refresh" title="Bấm để làm mới" style="cursor:pointer"><i></i><span>Đang tải...</span></div></div>
  <h1>Giải Open <span>20-10</span></h1>
  <div class="sub">Chủ nhật 11.10.2026 · 4 sân · mỗi bảng 1 sân</div>
  <div class="prog"><div id="pbar"></div></div>
@@ -695,16 +695,30 @@ function renderPill(){
  else if(S.remoteState==='err'){t='Chưa tải được dữ liệu';bad=true;}
  else t='Đang tải...';
  sy.className='pill'+(bad?' bad':'');sy.lastChild.textContent=t;
+ if(CACHE.A)renderHead();
+}
+function hms(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2);}
+function renderHead(){
+ var total=0;GROUPS.forEach(function(g){if(CACHE[g])total+=CACHE[g].count;});
+ var ko=KO.filter(function(x){return has(x.id);}).length;
+ $('pbar').style.width=((total+ko)/48*100)+'%';
+ var last=S.pulledAt||S.remoteAt||0;
+ $('ptxt').textContent='Vòng bảng '+total+'/40 trận · Vòng trong '+ko+'/8 trận'+(SURL()&&last?' · làm mới '+hms(last):'');
+}
+function refreshView(){
+ if(document.querySelector('.ov.show')){S.dirtyView=true;renderPill();return;}
+ var q=$('q');
+ if(q&&document.activeElement===q){
+  recalc();var o=$('ovl');if(o)o.innerHTML=allHTML();renderHead();renderPill();return;
+ }
+ render();
 }
 function render(){
  recalc();
  var tab=S.tab,y=window.pageYOffset;
  $('main').innerHTML=tab==='sched'?vSched():tab==='rank'?vRank():tab==='ko'?vKo():tab==='rules'?vRules():tab==='fin'?vFin():vBtc();
  Array.prototype.forEach.call($('nav').children,function(b){if(b.tagName==='BUTTON')b.classList.toggle('on',b.getAttribute('data-tab')===tab);});
- var total=0;GROUPS.forEach(function(g){total+=CACHE[g].count;});
- var ko=KO.filter(function(x){return has(x.id);}).length;
- $('pbar').style.width=((total+ko)/48*100)+'%';
- $('ptxt').textContent='Vòng bảng '+total+'/40 trận · Vòng trong '+ko+'/8 trận';
+ renderHead();
  renderPill();
  window.scrollTo(0,y);
 }
@@ -880,8 +894,9 @@ function fullPush(){
 }
 function pullSheet(){
  var u=SURL();
- return fetchJSON(u+(u.indexOf('?')<0?'?':'&')+'t='+Date.now(),{method:'GET'},15000).then(function(j){
+ return fetchJSON(u+(u.indexOf('?')<0?'?':'&')+'t='+Date.now(),{method:'GET'},10000).then(function(j){
   if(!j||!j.ok)throw new Error((j&&j.error)||'Lỗi đọc dữ liệu');
+  S.pulledAt=Date.now();
   var rows=(j.rows||[]).map(function(r){return r.map(function(c){return c==null?'':String(c);});});
   var p=rowsToRes(rows),before=JSON.stringify([S.remote,S.local]);
   S.remote=p.res;S.updated=j.updated||p.updated;S.remoteAt=Date.now();
@@ -899,21 +914,25 @@ function pullSheet(){
   return{changed:JSON.stringify([S.remote,S.local])!==before,rows:rows.length};
  });
 }
+var stoken=0,sbusyAt=0;
 function syncSheet(){
  if(!SURL())return Promise.resolve();
+ if(sbusy&&Date.now()-sbusyAt>20000){sbusy=false;}   // yêu cầu cũ bị treo (iOS tạm dừng trang): bỏ qua và làm lại
  if(sbusy){sagain=true;return Promise.resolve();}
- sbusy=true;
+ sbusy=true;sbusyAt=Date.now();var mine=++stoken,info=null,prevView=S.remoteState+'|'+S.sync.st;
  var p=Promise.resolve();
  if(S.btc&&S.key)p=pushNow();
- return p.then(pullSheet).then(function(info){
-  S.sync.st='ok';S.sync.t=Date.now();S.sync.msg='';
-  var seed=S.btc&&S.key&&info.rows<=1&&!S.seeding;
+ return p.then(pullSheet).then(function(i){
+  info=i;S.sync.st='ok';S.sync.t=Date.now();S.sync.msg='';
+  var seed=S.btc&&S.key&&i.rows<=1&&!S.seeding;
   if(seed){S.seeding=true;return fullPush().then(function(){S.seeding=false;toast('Đã tạo dữ liệu trên Google Sheet');},function(e){S.seeding=false;throw e;});}
  }).then(function(){
-  if(!document.querySelector('.ov.show')&&document.activeElement!==$('q'))render();else renderPill();
+  var first=!S.shown;S.shown=true;
+  if(first||(info&&info.changed)||prevView!==(S.remoteState+'|'+S.sync.st))refreshView();else renderPill();
  }).catch(function(e){
-  S.sync.st='err';S.sync.msg=errMsg(e);S.remoteState=S.remoteState==='ok'?'ok':'err';renderPill();
- }).then(function(){sbusy=false;if(sagain){sagain=false;setTimeout(syncSheet,300);}});
+  S.sync.st='err';S.sync.msg=errMsg(e);S.remoteState=S.remoteState==='ok'?'ok':'err';
+  if(prevView!==(S.remoteState+'|'+S.sync.st))refreshView();else renderPill();
+ }).then(function(){if(mine===stoken){sbusy=false;}if(sagain){sagain=false;setTimeout(syncSheet,300);}});
 }
 function pushSoon(){
  if(!S.btc||!SURL()||!S.key)return;
@@ -931,7 +950,7 @@ function matchCtx(id){
  return{id:id,stage:'group',t1:mm.t1,t2:mm.t2,title:'Sân '+(GROUPS.indexOf(g)+1)+' · Bảng '+g+' · Trận '+n,sub:'Lượt '+(mm.r+1)+' · 1 game chạm 15 điểm'};
 }
 function openSheet(html){$('sheet').innerHTML=html;$('ov').classList.add('show');}
-function closeSheet(){$('ov').classList.remove('show');D=null;}
+function closeSheet(){$('ov').classList.remove('show');D=null;if(S.dirtyView){S.dirtyView=false;render();}}
 function openMatch(id){
  var c=matchCtx(id);
  if(!c){toast('Chưa xác định đủ 2 đội');return;}
@@ -1263,6 +1282,7 @@ function act(a){
  else if(a==='saveimg')saveImg();
  else if(a==='clear'){var id=D.ctx.id;delete S.res[id];persist();closeSheet();render();toast('Đã xóa kết quả');}
  else if(a==='copysum')copy(summary(),'Đã sao chép, dán vào Zalo');
+ else if(a==='refresh'){toast('Đang làm mới...');var rp=SURL()?syncSheet():fetchRemote();Promise.resolve(rp).then(function(){toast('Đã làm mới lúc '+hms(Date.now()));});}
  else if(a==='unlock'){var pv=($('pin').value||'').trim();
   if(!pv){toast('Nhập mã BTC');return;}
   if(SURL()){
@@ -1325,12 +1345,16 @@ var hm=location.hash.match(/sheet=([^&]+)/);
 if(hm){try{S.sheetUrl=decodeURIComponent(hm[1]);localStorage.setItem(STORE+'-sheet',S.sheetUrl);history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}}
 if(S.btc&&SURL()&&!S.key){S.btc=false;S.res=S.remote;}
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-window.__app={syncSheet:syncSheet,changedIds:changedIds,fullPush:fullPush,SURL:SURL,finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
+window.__app={refreshView:refreshView,syncSheet:syncSheet,changedIds:changedIds,fullPush:fullPush,SURL:SURL,finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
 render();loadFonts();
 tick();
-setInterval(function(){if(document.visibilityState!=='hidden')tick();},20000);
+function stale(ms){return Date.now()-(S.pulledAt||S.remoteAt||0)>ms;}
+setInterval(function(){if(document.visibilityState!=='hidden')tick();},15000);
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')tick();});
+window.addEventListener('pageshow',function(){tick();});
+window.addEventListener('focus',function(){if(stale(5000))tick();});
 window.addEventListener('online',tick);
+document.addEventListener('touchstart',function(){if(SURL()&&stale(12000))tick();},{passive:true});
 })();
 </script>
 </body>
