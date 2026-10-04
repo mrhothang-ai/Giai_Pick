@@ -288,14 +288,33 @@ function finCalc(){
 var QR_SRC='data:image/png;base64,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';
 var BANK={name:'DONG THI DUNG',acc:'102004111770',bank:'VietinBank - CN Bắc Giang - Hội sở'};
 var FIN_FEE=300000;
-var BTC_PIN='2010'; /* mã mở chế độ BTC, có thể đổi */
+var SHEET_URL=''; /* dán link Web app của Google Apps Script (kết thúc /exec) để mọi máy tự đọc từ Google Sheet */
+var BTC_PIN='2010'; /* chỉ dùng khi chưa gắn Google Sheet */ /* mã mở chế độ BTC, có thể đổi */
 var CSV_FILE='ketqua.csv';
 var GCOL={A:'#5b1a62',B:'#e90052',C:'#0a9a56',D:'#1b6fd1'};
-var S={csvName:'ketqua.csv',res:{},local:{},remote:{},btc:false,sv:'all',q:'',ff:'all',updated:null,remoteAt:0,remoteState:'idle',device:'',tab:'sched',court:'A',rank:'A',savedAt:0};
+var S={sheetUrl:'',key:'',synced:{},sync:{st:'idle',t:0,msg:''},csvName:'ketqua.csv',res:{},local:{},remote:{},btc:false,sv:'all',q:'',ff:'all',updated:null,remoteAt:0,remoteState:'idle',device:'',tab:'sched',court:'A',rank:'A',savedAt:0};
 
 /* ---------- lưu trên máy ---------- */
-function load(){try{var d=JSON.parse(localStorage.getItem(STORE)||'null');if(d){S.local=d.res||{};S.savedAt=d.savedAt||0;}S.btc=localStorage.getItem(STORE+'-btc')==='1';S.csvName=localStorage.getItem(STORE+'-csvname')||'ketqua.csv';}catch(e){}S.res=S.btc?S.local:S.remote;}
-function persist(){S.savedAt=Date.now();try{localStorage.setItem(STORE,JSON.stringify({res:S.local,savedAt:S.savedAt}));return true;}catch(e){S.saveErr=true;return false;}}
+function load(){
+ try{
+  var d=JSON.parse(localStorage.getItem(STORE)||'null');
+  if(d){S.local=d.res||{};S.synced=d.synced||{};S.savedAt=d.savedAt||0;}
+  S.btc=localStorage.getItem(STORE+'-btc')==='1';
+  S.csvName=localStorage.getItem(STORE+'-csvname')||'ketqua.csv';
+  S.sheetUrl=localStorage.getItem(STORE+'-sheet')||'';
+  S.key=localStorage.getItem(STORE+'-key')||'';
+  var rc=JSON.parse(localStorage.getItem(STORE+'-remote')||'null');
+  if(rc&&rc.res){S.remote=rc.res;S.updated=rc.updated||null;S.remoteState=Object.keys(rc.res).length?'ok':'idle';}
+ }catch(e){}
+ S.res=S.btc?S.local:S.remote;
+}
+function persist(noPush){
+ S.savedAt=Date.now();
+ var ok=true;
+ try{localStorage.setItem(STORE,JSON.stringify({res:S.local,synced:S.synced,savedAt:S.savedAt}));}catch(e){S.saveErr=true;ok=false;}
+ if(!noPush)pushSoon();
+ return ok;
+}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function $(id){return document.getElementById(id);}
 function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(function(){el.classList.remove('show');},2300);}
@@ -489,7 +508,7 @@ function allHTML(){
 }
 function vSched(){
  var h='<div class="seg"><button data-sv="all" class="'+(S.sv==='all'?'on':'')+'">Tổng thể</button><button data-sv="court" class="'+(S.sv==='court'?'on':'')+'">Theo sân</button></div>';
- if(!S.btc&&S.remoteState==='err')h+='<div class="banner">Chưa tải được kết quả. Hãy mở trang bằng link GitHub Pages (https://...) và đảm bảo file '+CSV_FILE+' nằm cùng thư mục với trang này.</div>';
+ if(!S.btc&&S.remoteState==='err')h+='<div class="banner">'+(SURL()?'Chưa kết nối được Google Sheet'+(S.sync.msg?' ('+esc(S.sync.msg)+')':'')+'. Hãy kiểm tra mạng rồi thử lại.':'Chưa tải được kết quả. Hãy mở trang bằng link GitHub Pages (https://...) và đảm bảo file '+CSV_FILE+' nằm cùng thư mục với trang này.')+'</div>';
  if(S.sv==='court')return h+vCourt();
  h+='<div class="sec"><h2>Lịch thi đấu tổng thể</h2></div>';
  h+='<input class="srch" id="q" type="search" placeholder="Tìm tên vận động viên..." value="'+esc(S.q)+'" autocomplete="off" autocapitalize="off">';
@@ -538,36 +557,46 @@ function vRules(){
  h+='<div class="card"><b class="t">Danh sách các bảng</b><div class="grps">'+GROUPS.map(function(g,i){return '<div><b style="color:'+GCOL[g]+'">Bảng '+g+' · Sân '+(i+1)+'</b>'+TEAMS[g].map(esc).join('<br>')+'</div>';}).join('')+'</div></div>';
  return h;
 }
-function vBtc(){
- var h='<div class="sec"><h2>Ban tổ chức</h2></div>';
- if(!S.btc){
-  h+='<div class="card"><b class="t">Chế độ BTC</b><p class="note">Trang này đang ở chế độ xem: kết quả được đọc từ file '+CSV_FILE+' trên GitHub'+(S.updated?' (cập nhật '+fmtUpd(S.updated)+')':'')+'. Nhập mã để mở chức năng nhập tỉ số.</p>'+
-   '<div class="pin"><input id="pin" type="password" inputmode="numeric" placeholder="Mã BTC" autocomplete="off"><button data-act="unlock">Mở</button></div></div>';
-  return h;
- }
- var n=Object.keys(S.local).filter(function(k){return /^[A-D]-\d+$/.test(k)||/^(BK|CK|H3)/.test(k);}).length;
- h+='<div class="btcbar">Đang ở chế độ BTC. Dữ liệu nhập được lưu trên máy này ('+n+' trận đã có tỉ số, cùng số liệu tài chính). Người xem chỉ thấy kết quả sau khi anh tải file '+CSV_FILE+' lên GitHub.</div>';
- h+='<div class="card"><b class="t">Cập nhật kết quả lên GitHub</b>'+
-  '<div class="step"><b>1</b><span>Nhập tỉ số ở tab Lịch đấu hoặc Vòng trong.</span></div>'+
-  '<div class="step"><b>2</b><span>Đặt tên file (nên giữ '+CSV_FILE+') rồi bấm "Lưu file CSV" để chọn nơi lưu.</span></div>'+
-  '<div class="step"><b>3</b><span>Vào kho GitHub → Add file → Upload files → chọn file '+CSV_FILE+' (đặt cùng thư mục với trang này, ghi đè bản cũ) → Commit changes.</span></div>'+
-  '<div class="step"><b>4</b><span>Đợi khoảng 1 phút, người xem sẽ tự thấy kết quả mới (trang tự làm mới 30 giây một lần).</span></div>'+
-  '<label class="f">Tên file khi lưu</label><input class="tx1" id="csvn" type="text" value="'+esc(S.csvName)+'" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">'+
-  '<button class="btn mag" data-act="csvsave">Lưu file CSV (chọn nơi lưu)</button>'+
+function csvButtons(){
+ return '<label class="f">Tên file khi lưu</label><input class="tx1" id="csvn" type="text" value="'+esc(S.csvName)+'" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">'+
+  '<button class="btn alt" data-act="csvsave">Lưu file CSV (chọn nơi lưu)</button>'+
   '<div class="row2"><button class="btn alt" data-act="csvdl" style="margin-top:9px">Tải thẳng</button><button class="btn alt" data-act="csvshare" style="margin-top:9px">Chia sẻ file</button></div>'+
   '<button class="btn alt" data-act="csvcopy" style="margin-top:9px">Sao chép nội dung CSV</button>'+
-  '<p class="note" style="margin-top:10px">Máy tính (Chrome, Edge): hiện hộp thoại chọn thư mục và đổi tên. Điện thoại: hiện bảng chia sẻ, chọn "Lưu vào Tệp" (iPhone) hoặc Drive/Tệp (Android). Android Chrome còn có thể bật Cài đặt → Tải xuống → Hỏi nơi lưu mỗi lần. Khi up lên GitHub, tên file phải đúng là '+CSV_FILE+'.</p></div>';
- h+='<div class="card"><b class="t">Nạp CSV vào máy này</b><p class="note">Dùng khi đổi điện thoại hoặc muốn lấy lại dữ liệu đã đăng. Việc nạp sẽ thay toàn bộ kết quả đang có trên máy.</p>'+
-  '<button class="btn alt" data-act="csvgh">Nạp từ '+CSV_FILE+' trên GitHub</button>'+
-  '<button class="btn alt" data-act="csvfile">Chọn file CSV từ máy</button>'+
+  '<button class="btn alt" data-act="csvfile">Nạp từ file CSV trên máy</button>'+
   '<label class="f">Hoặc dán nội dung CSV</label><textarea class="tx" id="csvt" placeholder="Dán nội dung CSV ở đây"></textarea>'+
-  '<button class="btn alt" data-act="csvpaste">Nạp từ nội dung dán</button></div>';
+  '<button class="btn alt" data-act="csvpaste">Nạp từ nội dung dán</button>';
+}
+function vBtc(){
+ var u=SURL(),hard=!!SHEET_URL,h='<div class="sec"><h2>Ban tổ chức</h2></div>';
+ if(!S.btc){
+  h+='<div class="card"><b class="t">Chế độ BTC</b><p class="note">'+(u?'Trang đang đọc dữ liệu từ Google Sheet'+(S.updated?' (cập nhật '+fmtUpd(S.updated)+')':'')+'. Nhập mã BTC để nhập tỉ số và thu chi.':'Chưa gắn Google Sheet nên dữ liệu chỉ lưu trên máy này. Nhập mã (mặc định 2010) để mở chế độ BTC, sau đó gắn Google Sheet ở bước kế tiếp.')+'</p>'+
+   '<div class="pin"><input id="pin" type="password" placeholder="Mã BTC" autocomplete="off"><button data-act="unlock">Mở</button></div></div>';
+  return h;
+ }
+ var n=u?changedIds().ups.length:0;
+ var msg=!u?'Chưa gắn Google Sheet: dữ liệu chỉ lưu trên máy này.':(S.sync.st==='err'?'Chưa kết nối được Google Sheet ('+esc(S.sync.msg||'')+'). '+n+' thay đổi đang chờ gửi, sẽ tự gửi khi có mạng.':(n?n+' thay đổi đang gửi lên Google Sheet...':'Đã đồng bộ với Google Sheet'+(S.sync.t?' lúc '+hhmm(S.sync.t):'')+'.'));
+ h+='<div class="btcbar">Đang ở chế độ BTC. '+msg+'</div>';
+ h+='<div class="card"><b class="t">Google Sheet</b>'+
+  '<p class="note">'+(u?'Bấm Lưu ở bất kỳ màn hình nào là dữ liệu tự lên Sheet; người xem tự làm mới 20 giây một lần. Anh cũng có thể sửa trực tiếp trong Sheet.':'Làm theo hướng dẫn bên dưới (một lần), rồi dán link và mã vào đây.')+'</p>'+
+  (hard?'<p class="note">Link Sheet đã gắn sẵn trong mã trang.</p>':'<label class="f">Link Web app (kết thúc bằng /exec)</label><input class="tx1" id="surl" type="text" value="'+esc(S.sheetUrl)+'" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">')+
+  '<label class="f">Mã BTC (đã đặt trong Code.gs)</label><input class="tx1" id="skey" type="password" value="'+esc(S.key)+'" autocomplete="off">'+
+  '<button class="btn mag" data-act="sheetsave">Lưu và kết nối</button>'+
+  (u?'<div class="row2"><button class="btn alt" data-act="sheetsync" style="margin-top:9px">Đồng bộ ngay</button><button class="btn alt" data-act="sheettest" style="margin-top:9px">Kiểm tra</button></div>'+
+   '<button class="btn alt" data-act="sheetpush" style="margin-top:9px">Đẩy toàn bộ dữ liệu trên máy lên Sheet</button>':'')+
+  (S.sheetUrl&&!hard?'<button class="btn bad" data-act="sheetoff">Ngắt kết nối Google Sheet</button>':'')+
+  '<details><summary>Hướng dẫn tạo Google Sheet (làm 1 lần)</summary>'+
+  '<div class="step"><b>1</b><span>Vào sheets.new để tạo một Google Sheet mới.</span></div>'+
+  '<div class="step"><b>2</b><span>Menu Tiện ích mở rộng (Extensions) → Apps Script. Xóa mã mẫu, dán toàn bộ file Code.gs, đổi dòng BTC_KEY thành mã bí mật của BTC.</span></div>'+
+  '<div class="step"><b>3</b><span>Chọn hàm setup rồi bấm Run, cấp quyền khi Google hỏi.</span></div>'+
+  '<div class="step"><b>4</b><span>Deploy → New deployment → Web app. Execute as: Me. Who has access: Anyone. Bấm Deploy và sao chép Web app URL.</span></div>'+
+  '<div class="step"><b>5</b><span>Dán URL và mã BTC vào hai ô trên, bấm Lưu và kết nối. App tự tạo dữ liệu trên Sheet.</span></div>'+
+  '<div class="step"><b>6</b><span>Để mọi người xem tự thấy kết quả, dán URL vào dòng SHEET_URL ở đầu mã index.html trên GitHub (hoặc gửi URL cho người làm app gắn sẵn).</span></div></details></div>';
  h+='<div class="card"><b class="t">Chia sẻ</b><button class="btn alt" data-act="copysum" style="margin-top:9px">Sao chép kết quả dạng chữ (gửi Zalo)</button></div>';
- h+='<div class="card"><b class="t">Khác</b><p class="note">'+(S.saveErr?'Không lưu được vào bộ nhớ trình duyệt (có thể đang ở chế độ ẩn danh).':'Lần lưu cuối trên máy: '+(S.savedAt?hhmm(S.savedAt):'chưa có')+'. Không xóa dữ liệu trình duyệt và không dùng chế độ ẩn danh khi nhập.')+'</p>'+
-  '<button class="btn alt" data-act="lock">Khóa chế độ BTC</button><button class="btn bad" data-act="wipe">Xóa toàn bộ dữ liệu trên máy</button></div>';
+ h+='<div class="card"><details><summary>Sao lưu bằng file CSV</summary><p class="note">Chỉ cần khi muốn lưu bản dự phòng hoặc chuyển dữ liệu giữa các máy.</p>'+csvButtons()+'</details></div>';
+ h+='<div class="card"><b class="t">Khác</b><p class="note">'+(S.saveErr?'Không lưu được vào bộ nhớ trình duyệt (có thể đang ở chế độ ẩn danh).':'Lần lưu cuối trên máy: '+(S.savedAt?hhmm(S.savedAt):'chưa có')+'.')+'</p>'+
+  '<button class="btn alt" data-act="lock">Khóa chế độ BTC</button><button class="btn bad" data-act="wipe">Xóa toàn bộ dữ liệu</button></div>';
  return h;
 }
-
 function finRow(a){
  var r=S.res['thu:'+a.id],paid=r&&r.a>0,sp=r&&r.b>0;
  return '<button class="ftr"'+(S.btc?' data-fin="thu:'+a.id+'"':'')+'><div class="who"><b>'+esc(a.name)+'</b><small>cùng '+esc(a.mate)+(r&&r.note?' · '+esc(r.note):'')+'</small></div>'+
@@ -652,9 +681,16 @@ function finSave(){
 }
 function fmtUpd(iso){var d=new Date(iso);if(isNaN(d))return '';return hhmm(d.getTime())+' '+('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2);}
 function renderPill(){
- var sy=$('sync'),t,bad=false;
- if(S.btc){t=S.saveErr?'Không lưu được':'BTC · lưu trên máy';bad=!!S.saveErr;}
- else if(S.remoteState==='ok')t=S.updated&&fmtUpd(S.updated)?'Cập nhật '+fmtUpd(S.updated):'Đã tải '+hhmm(S.remoteAt);
+ var sy=$('sync'),t,bad=false,u=SURL();
+ if(S.btc){
+  if(!u){t=S.saveErr?'Không lưu được':'BTC · lưu trên máy';bad=!!S.saveErr;}
+  else{var n=changedIds().ups.length;
+   if(S.sync.st==='err'){t=n?'Mất mạng · '+n+' chờ gửi':'Mất kết nối';bad=true;}
+   else if(n)t='Đang gửi '+n;
+   else if(S.sync.st==='ok')t='BTC · đã đồng bộ';
+   else t='BTC · đang kết nối';}
+ }
+ else if(S.remoteState==='ok')t=(S.sync.st==='err'?'Mất kết nối · ':'')+(S.updated&&fmtUpd(S.updated)?'Cập nhật '+fmtUpd(S.updated):'Đã tải '+hhmm(S.remoteAt));
  else if(S.remoteState==='empty')t='Chưa có kết quả';
  else if(S.remoteState==='err'){t='Chưa tải được dữ liệu';bad=true;}
  else t='Đang tải...';
@@ -675,7 +711,7 @@ function render(){
 
 /* ---------- CSV ---------- */
 function csvq(v){v=v==null?'':String(v);return /[",\r\n;]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
-function toCSV(){
+function buildRows(){
  recalc();
  var rows=[['ma','vong','doi_1','doi_2','diem_1','diem_2','boc_tham']];
  GROUPS.forEach(function(g){gmatches(g).forEach(function(m){var r=S.res[m.id];
@@ -686,6 +722,10 @@ function toCSV(){
  ATH.forEach(function(a){var r=S.res['thu:'+a.id];rows.push(['thu:'+a.id,'Thu VĐV - Bảng '+a.g,a.name,a.team,r&&r.a>0?r.a:'',r&&r.b>0?r.b:'',r&&r.note||'']);});
  finIds('thukhac:').forEach(function(k){var r=S.res[k];rows.push([k,'Thu khác / tài trợ ngoài',r.p||'',r.q||'',r.a||'','',r.note||'']);});
  finIds('chi:').forEach(function(k){var r=S.res[k];rows.push([k,'Chi',r.p||'',r.q||'',r.a||'','',r.note||'']);});
+ return rows;
+}
+function toCSV(){
+ var rows=buildRows();
  rows.push(['meta:updated','Thời điểm xuất file',new Date().toISOString(),'','','','']);
  return '\uFEFF'+rows.map(function(r){return r.map(csvq).join(',');}).join('\r\n')+'\r\n';
 }
@@ -700,7 +740,11 @@ function parseCSV(text){
   else if(c==='\n'){row.push(f);rows.push(row);row=[];f='';}
   else if(c!=='\r')f+=c;}
  if(f!==''||row.length){row.push(f);rows.push(row);}
- var hd=(rows.shift()||[]).map(function(h){return h.trim().toLowerCase();});
+ return rowsToRes(rows);
+}
+function rowsToRes(rows){
+ rows=rows.slice();
+ var hd=(rows.shift()||[]).map(function(h){return String(h).trim().toLowerCase();});
  function ix(n,d){var k=hd.indexOf(n);return k<0?d:k;}
  var I={ma:ix('ma',0),d1:ix('doi_1',2),a:ix('diem_1',4),b:ix('diem_2',5),n:ix('boc_tham',6)};
  var res={},upd=null;
@@ -792,6 +836,90 @@ function fetchRemote(){
   return txt;
  },function(e){S.remoteState='err';S.remoteAt=Date.now();if(!S.btc){var rerender=!document.querySelector('.ov.show')&&document.activeElement!==$('q');if(rerender)render();else renderPill();}return null;});
 }
+
+/* ---------- Google Sheet (Apps Script) ---------- */
+var sbusy=false,sagain=false;
+function SURL(){return (SHEET_URL||S.sheetUrl||'').trim();}
+function canon(r){return r?[r.a==null?'':r.a,r.b==null?'':r.b,r.note||'',r.p||'',r.q||''].join('|'):'';}
+function errMsg(e){
+ var m=String(e&&e.message||e||'');
+ if(e&&e.name==='SyntaxError')return 'Link chưa đúng hoặc chưa Deploy ở chế độ Anyone';
+ if(e&&e.name==='AbortError')return 'Quá thời gian chờ';
+ if(/Failed to fetch|NetworkError|Load failed/i.test(m))return 'Không có mạng hoặc link sai';
+ return m.slice(0,90);
+}
+function fetchJSON(url,opt,ms){
+ var ctl=typeof AbortController!=='undefined'?new AbortController():null,tm=null;
+ if(ctl){opt.signal=ctl.signal;tm=setTimeout(function(){ctl.abort();},ms||15000);}
+ return fetch(url,opt).then(function(r){clearTimeout(tm);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();},function(e){clearTimeout(tm);throw e;});
+}
+function sheetPost(payload,url,key){
+ payload.key=key!=null?key:S.key;
+ return fetchJSON(url||SURL(),{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload),redirect:'follow'}).then(function(j){
+  if(!j||!j.ok)throw new Error((j&&j.error)||'Máy chủ từ chối');return j;});
+}
+function changedIds(){
+ var ids={},ups=[];
+ Object.keys(S.local).forEach(function(k){ids[k]=1;});Object.keys(S.synced).forEach(function(k){ids[k]=1;});
+ Object.keys(ids).forEach(function(id){if(canon(S.local[id])!==(S.synced[id]||''))ups.push(id);});
+ return{ups:ups};
+}
+function rowDict(){var d={};buildRows().slice(1).forEach(function(r){d[r[0]]=r;});return d;}
+function pushNow(){
+ var ch=changedIds().ups;if(!ch.length)return Promise.resolve(false);
+ var dict=rowDict(),ops=[],dels=[],sent={};
+ ch.forEach(function(id){sent[id]=canon(S.local[id]);if(dict[id])ops.push(dict[id]);else dels.push(id);});
+ return sheetPost({ops:ops,del:dels}).then(function(){
+  ch.forEach(function(id){if(sent[id])S.synced[id]=sent[id];else delete S.synced[id];});
+  persist(true);return true;});
+}
+function fullPush(){
+ var rows=buildRows();rows.shift();
+ var sent={};Object.keys(S.local).forEach(function(k){var c=canon(S.local[k]);if(c)sent[k]=c;});
+ return sheetPost({replace:true,rows:rows}).then(function(){S.synced=sent;persist(true);});
+}
+function pullSheet(){
+ var u=SURL();
+ return fetchJSON(u+(u.indexOf('?')<0?'?':'&')+'t='+Date.now(),{method:'GET'},15000).then(function(j){
+  if(!j||!j.ok)throw new Error((j&&j.error)||'Lỗi đọc dữ liệu');
+  var rows=(j.rows||[]).map(function(r){return r.map(function(c){return c==null?'':String(c);});});
+  var p=rowsToRes(rows),before=JSON.stringify([S.remote,S.local]);
+  S.remote=p.res;S.updated=j.updated||p.updated;S.remoteAt=Date.now();
+  S.remoteState=(p.count||rows.length>1)?'ok':'empty';
+  if(S.btc){
+   var ids={};[p.res,S.local,S.synced].forEach(function(o){Object.keys(o).forEach(function(k){ids[k]=1;});});
+   Object.keys(ids).forEach(function(id){
+    if(canon(S.local[id])!==(S.synced[id]||''))return;
+    if(p.res[id]){S.local[id]=p.res[id];S.synced[id]=canon(p.res[id]);}
+    else{delete S.local[id];delete S.synced[id];}
+   });
+   S.res=S.local;persist(true);
+  }else S.res=S.remote;
+  try{localStorage.setItem(STORE+'-remote',JSON.stringify({res:S.remote,updated:S.updated}));}catch(e){}
+  return{changed:JSON.stringify([S.remote,S.local])!==before,rows:rows.length};
+ });
+}
+function syncSheet(){
+ if(!SURL())return Promise.resolve();
+ if(sbusy){sagain=true;return Promise.resolve();}
+ sbusy=true;
+ var p=Promise.resolve();
+ if(S.btc&&S.key)p=pushNow();
+ return p.then(pullSheet).then(function(info){
+  S.sync.st='ok';S.sync.t=Date.now();S.sync.msg='';
+  var seed=S.btc&&S.key&&info.rows<=1&&!S.seeding;
+  if(seed){S.seeding=true;return fullPush().then(function(){S.seeding=false;toast('Đã tạo dữ liệu trên Google Sheet');},function(e){S.seeding=false;throw e;});}
+ }).then(function(){
+  if(!document.querySelector('.ov.show')&&document.activeElement!==$('q'))render();else renderPill();
+ }).catch(function(e){
+  S.sync.st='err';S.sync.msg=errMsg(e);S.remoteState=S.remoteState==='ok'?'ok':'err';renderPill();
+ }).then(function(){sbusy=false;if(sagain){sagain=false;setTimeout(syncSheet,300);}});
+}
+function pushSoon(){
+ if(!S.btc||!SURL()||!S.key)return;
+ clearTimeout(pushSoon.h);pushSoon.h=setTimeout(syncSheet,500);
+}
+function tick(){if(SURL())syncSheet();else if(!S.btc)fetchRemote();}
 
 /* ---------- bảng nhập tỉ số ---------- */
 var D=null;
@@ -1117,6 +1245,16 @@ document.addEventListener('click',function(e){
   if(op==='+')stepTo(k2,(cur==null?0:cur)+1);else if(op==='-')stepTo(k2,cur==null?0:cur-1);else stepTo(k2,15);}
  else if(d.act){act(d.act);}
 });
+function unlockOK(key){
+ S.btc=true;S.key=key;
+ try{localStorage.setItem(STORE+'-btc','1');if(key)localStorage.setItem(STORE+'-key',key);}catch(er){}
+ if(!Object.keys(S.local).length&&Object.keys(S.remote).length){
+  S.local=JSON.parse(JSON.stringify(S.remote));S.synced={};
+  Object.keys(S.local).forEach(function(k){var c=canon(S.local[k]);if(c)S.synced[k]=c;});
+  persist(true);
+ }
+ S.res=S.local;S.tab='sched';render();toast('Đã mở chế độ BTC');syncSheet();
+}
 function act(a){
  if(a==='close')closeSheet();
  else if(a==='save')saveMatch();
@@ -1126,11 +1264,32 @@ function act(a){
  else if(a==='clear'){var id=D.ctx.id;delete S.res[id];persist();closeSheet();render();toast('Đã xóa kết quả');}
  else if(a==='copysum')copy(summary(),'Đã sao chép, dán vào Zalo');
  else if(a==='unlock'){var pv=($('pin').value||'').trim();
-  if(pv!==BTC_PIN){toast('Mã không đúng');return;}
-  S.btc=true;try{localStorage.setItem(STORE+'-btc','1');}catch(er){}
-  if(!Object.keys(S.local).length&&Object.keys(S.remote).length){S.local=JSON.parse(JSON.stringify(S.remote));persist();toast('Đã mở chế độ BTC, lấy sẵn dữ liệu từ GitHub');}else toast('Đã mở chế độ BTC');
-  S.res=S.local;S.tab='sched';render();}
- else if(a==='lock'){S.btc=false;try{localStorage.removeItem(STORE+'-btc');}catch(er){}S.res=S.remote;S.tab='sched';render();fetchRemote();toast('Đã khóa chế độ BTC');}
+  if(!pv){toast('Nhập mã BTC');return;}
+  if(SURL()){
+   toast('Đang kiểm tra mã...');
+   sheetPost({action:'check'},null,pv).then(function(){unlockOK(pv);},function(er){toast('Không mở được: '+errMsg(er));});
+  }else{
+   if(pv!==BTC_PIN){toast('Mã không đúng');return;}
+   unlockOK('');
+  }}
+ else if(a==='lock'){S.btc=false;S.key='';try{localStorage.removeItem(STORE+'-btc');localStorage.removeItem(STORE+'-key');}catch(er){}S.res=S.remote;S.tab='sched';render();tick();toast('Đã khóa chế độ BTC');}
+ else if(a==='sheetsave'){
+  var nu=SHEET_URL?SHEET_URL:(($('surl')&&$('surl').value)||'').trim(),nk=($('skey').value||'').trim();
+  if(!/^https?:\/\//.test(nu)){toast('Nhập link Web app (bắt đầu bằng https://)');return;}
+  if(!nk){toast('Nhập mã BTC của Sheet');return;}
+  toast('Đang kết nối...');
+  sheetPost({action:'check'},nu,nk).then(function(){
+   S.sheetUrl=SHEET_URL?'':nu;S.key=nk;
+   try{localStorage.setItem(STORE+'-sheet',S.sheetUrl);localStorage.setItem(STORE+'-key',nk);}catch(er){}
+   S.sync={st:'idle',t:0,msg:''};render();toast('Kết nối thành công');syncSheet();
+  },function(er){toast('Chưa kết nối được: '+errMsg(er));});}
+ else if(a==='sheettest'){toast('Đang kiểm tra...');
+  fetchJSON(SURL()+(SURL().indexOf('?')<0?'?':'&')+'action=ping',{method:'GET'},12000).then(function(){return sheetPost({action:'check'});}).then(function(){toast('Kết nối tốt, mã BTC đúng ✅');},function(er){toast('Lỗi: '+errMsg(er));});}
+ else if(a==='sheetsync'){toast('Đang đồng bộ...');syncSheet().then(function(){if(S.sync.st==='ok')toast('Đã đồng bộ');});}
+ else if(a==='sheetpush'){if(!confirm('Ghi đè toàn bộ Google Sheet bằng dữ liệu trên máy này?'))return;
+  toast('Đang gửi...');fullPush().then(function(){render();toast('Đã đẩy toàn bộ lên Sheet');},function(er){toast('Lỗi: '+errMsg(er));});}
+ else if(a==='sheetoff'){if(!confirm('Ngắt kết nối Google Sheet? Dữ liệu trên máy vẫn giữ.'))return;
+  S.sheetUrl='';S.key='';S.synced={};try{localStorage.removeItem(STORE+'-sheet');localStorage.removeItem(STORE+'-key');}catch(er){}persist(true);render();toast('Đã ngắt kết nối');}
  else if(a==='finsave')finSave();
  else if(a==='findel'){delete S.res[D.id];persist();closeSheet();render();toast('Đã xóa khoản');}
  else if(a==='copyacc')copy(BANK.acc,'Đã sao chép số tài khoản');
@@ -1162,12 +1321,16 @@ document.addEventListener('change',function(e){
 });
 /* ---------- khởi động ---------- */
 load();
+var hm=location.hash.match(/sheet=([^&]+)/);
+if(hm){try{S.sheetUrl=decodeURIComponent(hm[1]);localStorage.setItem(STORE+'-sheet',S.sheetUrl);history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}}
+if(S.btc&&SURL()&&!S.key){S.btc=false;S.res=S.remote;}
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-window.__app={finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
+window.__app={syncSheet:syncSheet,changedIds:changedIds,fullPush:fullPush,SURL:SURL,finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
 render();loadFonts();
-if(!S.btc)fetchRemote();
-setInterval(function(){if(!S.btc&&document.visibilityState!=='hidden')fetchRemote();},30000);
-document.addEventListener('visibilitychange',function(){if(!S.btc&&document.visibilityState==='visible')fetchRemote();});
+tick();
+setInterval(function(){if(document.visibilityState!=='hidden')tick();},20000);
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')tick();});
+window.addEventListener('online',tick);
 })();
 </script>
 </body>
