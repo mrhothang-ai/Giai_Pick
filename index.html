@@ -246,12 +246,19 @@ ul.rl li:before{content:'';position:absolute;left:2px;top:15px;width:9px;height:
 'use strict';
 var STORE='ilsung-open2010-v2';
 var GROUPS=['A','B','C','D'];
-var TEAMS={
- A:['Sơn - Thương','Hòa - Hướng','Vui - Hạnh','Kiên - Thắng','Tưởng - Châu'],
+var DEFTEAMS={
+ A:['Sơn - Thương','Hòa - Hướng','Kiên - Vui','Dương (NĐC) - Thắng','Tưởng - Châu'],
  B:['Vinh - Thành','Tuấn - Điệp','Bắc - Hưng','Quyền - Quang','Dương - Hương'],
- C:['Sơn(SH) - Vân','Hải - Thu','Dũng - Chi','Bến - Ngọc','Công - Liên'],
+ C:['Loan - Vân','Hải - Thu','Dũng - Chi','Bến - Ngọc','Công - Liên'],
  D:['Hà - Hoa','Thơm - Hiền','Chuyên - Dung','Kim Anh - Lương','Thủy - Thoa']
 };
+var TEAMS={A:DEFTEAMS.A.slice(),B:DEFTEAMS.B.slice(),C:DEFTEAMS.C.slice(),D:DEFTEAMS.D.slice()};
+/* Mã VĐV cũ (theo vị trí đôi) -> tên, để đọc được dữ liệu tiền đã nhập trước đây */
+var OLD_ATH={A1a:'Sơn',A1b:'Thương',A2a:'Hòa',A2b:'Hướng',A3a:'Vui',A3b:'Hạnh',A4a:'Kiên',A4b:'Thắng',A5a:'Tưởng',A5b:'Châu',
+ B1a:'Vinh',B1b:'Thành',B2a:'Tuấn',B2b:'Điệp',B3a:'Bắc',B3b:'Hưng',B4a:'Quyền',B4b:'Quang',B5a:'Dương',B5b:'Hương',
+ C1a:'Sơn(SH)',C1b:'Vân',C2a:'Hải',C2b:'Thu',C3a:'Dũng',C3b:'Chi',C4a:'Bến',C4b:'Ngọc',C5a:'Công',C5b:'Liên',
+ D1a:'Hà',D1b:'Hoa',D2a:'Thơm',D2b:'Hiền',D3a:'Chuyên',D3b:'Dung',D4a:'Kim Anh',D4b:'Lương',D5a:'Thủy',D5b:'Thoa'};
+var SHEET_LINK='https://docs.google.com/spreadsheets/d/1O4r33Kz7LGcQDJ--L0p40E9k7XV0V4q5s1Gvt3fNBAo/edit';
 /* 5 lượt: mỗi lượt 2 trận + 1 đội nghỉ. Mỗi đội chỉ ra sân 1 lần mỗi lượt, không đá 2 trận liên tiếp */
 var ROUNDS=[
  {rest:5,m:[[1,2],[3,4]]},
@@ -272,7 +279,26 @@ var KO=[
  {id:'H3B',lab:'Tranh hạng Ba',gi:'B',s1:{k:'l',m:'BK3'},s2:{k:'l',m:'BK4'}}
 ];
 var KOM={};KO.forEach(function(m){KOM[m.id]=m;});
-var ATH=[];GROUPS.forEach(function(g){TEAMS[g].forEach(function(t,i){var p=t.split(' - ');['a','b'].forEach(function(sd,k){ATH.push({id:g+(i+1)+sd,g:g,name:p[k],mate:p[1-k],team:t});});});});
+var ATH=[],ATH_DUP=[];
+function buildAth(){
+ ATH.length=0;ATH_DUP=[];var seen={};
+ ['A','B','C','D'].forEach(function(g){TEAMS[g].forEach(function(t,i){
+  var p=String(t).split(/\s*[-–—]\s*/).map(function(x){return x.trim();}).filter(function(x){return x;});
+  if(!p.length)return;
+  p.slice(0,2).forEach(function(nm,k){
+   if(seen[nm])ATH_DUP.push(nm);seen[nm]=1;
+   ATH.push({id:nm,g:g,name:nm,mate:p.length>1?p[1-k]:'',team:t,slot:g+(i+1)});
+  });
+ });});
+}
+function applyRoster(){
+ ['A','B','C','D'].forEach(function(g){for(var i=0;i<5;i++){
+  var r=S.res['doi:'+g+(i+1)];
+  TEAMS[g][i]=(r&&r.note&&String(r.note).trim())?String(r.note).trim():DEFTEAMS[g][i];
+ }});
+ buildAth();
+}
+buildAth();
 function vnd(n){n=Math.round(+n||0);var neg=n<0;n=Math.abs(n);return (neg?'−':'')+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+'đ';}
 function num(v){var d=String(v==null?'':v).replace(/[^\d]/g,'');return d===''?null:parseInt(d,10);}
 function dmy(iso){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(iso||'');return m?m[3]+'/'+m[2]:(iso||'');}
@@ -282,6 +308,9 @@ function finCalc(){
  ATH.forEach(function(a){var r=S.res['thu:'+a.id];
   if(r&&r.a>0){o.paid+=r.a;o.paidN++;}else o.unpaid.push(a);
   if(r&&r.b>0){o.spon+=r.b;o.sponN++;}});
+ var inRoster={};ATH.forEach(function(a){inRoster[a.id]=1;});o.orphans=[];
+ Object.keys(S.res).forEach(function(k){if(k.indexOf('thu:')!==0)return;var nm=k.slice(4);if(inRoster[nm])return;var r=S.res[k];
+  if(r&&(r.a>0||r.b>0)){o.orphans.push({id:nm,name:nm,r:r});if(r.a>0){o.paid+=r.a;o.paidN++;}if(r.b>0){o.spon+=r.b;o.sponN++;}}});
  finIds('thukhac:').forEach(function(k){var r=S.res[k];if(r&&r.a>0){o.other+=r.a;o.otherN++;}});
  finIds('chi:').forEach(function(k){var r=S.res[k];if(r&&r.a>0){o.chi+=r.a;o.chiN++;}});
  o.income=o.paid+o.spon+o.other;o.balance=o.income-o.chi;o.expected=ATH.length*FIN_FEE;
@@ -379,7 +408,7 @@ function calc(g){
  ties.forEach(function(s){var lo=Math.min.apply(null,s.map(function(t){return order.indexOf(t);}));if(lo<=1)blocked=true;});
  return{st:st,order:order,complete:complete,ties:ties,blocked:blocked,ready:complete&&!blocked,count:played.length};
 }
-function recalc(){CACHE={};GROUPS.forEach(function(g){CACHE[g]=calc(g);});}
+function recalc(){applyRoster();CACHE={};GROUPS.forEach(function(g){CACHE[g]=calc(g);});}
 
 /* ---------- vòng trong ---------- */
 function slot(s){
@@ -596,6 +625,10 @@ function vBtc(){
   '<div class="step"><b>4</b><span>Deploy → New deployment → Web app. Execute as: Me. Who has access: Anyone. Bấm Deploy và sao chép Web app URL.</span></div>'+
   '<div class="step"><b>5</b><span>Dán URL và mã BTC vào hai ô trên, bấm Lưu và kết nối. App tự tạo dữ liệu trên Sheet.</span></div>'+
   '<div class="step"><b>6</b><span>Để mọi người xem tự thấy kết quả, dán URL vào dòng SHEET_URL ở đầu mã index.html trên GitHub (hoặc gửi URL cho người làm app gắn sẵn).</span></div></details></div>';
+ h+='<div class="card"><b class="t">Đội hình hiện tại</b>'+(ATH_DUP.length?'<div class="alert" style="margin:8px 0 0">Tên trùng: <b>'+ATH_DUP.map(esc).join(', ')+'</b>. Hai người trùng tên sẽ bị gộp tiền. Hãy thêm ký hiệu phân biệt, ví dụ (SH).</div>':'')+
+  '<p class="note" style="margin-top:6px">Muốn đổi đội: mở Google Sheet, tìm dòng <b>doi:A3</b> (bảng A, đôi 3), sửa tên ở cột <b>doi_1</b> theo dạng <b>Tên1 - Tên2</b>. Trang tự cập nhật sau khoảng 15 giây. Tiền đóng đi theo <b>tên người</b>, không lệch khi đổi cặp. Chỉ nên đổi trước khi các trận bắt đầu.</p>'+
+  '<div class="grps">'+GROUPS.map(function(g){return '<div><b style="color:'+GCOL[g]+'">Bảng '+g+'</b>'+TEAMS[g].map(function(t,i){return (i+1)+'. '+esc(t);}).join('<br>')+'</div>';}).join('')+'</div>'+
+  (SHEET_LINK?'<a class="btn alt" style="text-decoration:none" href="'+SHEET_LINK+'" target="_blank" rel="noopener">Mở Google Sheet</a>':'')+'</div>';
  h+='<div class="card"><b class="t">Chia sẻ</b><button class="btn alt" data-act="copysum" style="margin-top:9px">Sao chép kết quả dạng chữ (gửi Zalo)</button></div>';
  h+='<div class="card"><details><summary>Sao lưu bằng file CSV</summary><p class="note">Chỉ cần khi muốn lưu bản dự phòng hoặc chuyển dữ liệu giữa các máy.</p>'+csvButtons()+'</details></div>';
  h+='<div class="card"><b class="t">Khác</b><p class="note">'+(S.saveErr?'Không lưu được vào bộ nhớ trình duyệt (có thể đang ở chế độ ẩn danh).':'Lần lưu cuối trên máy: '+(S.savedAt?hhmm(S.savedAt):'chưa có')+'.')+'</p>'+
@@ -635,6 +668,7 @@ function vFin(){
   h+='<div class="ftg"><i style="background:'+GCOL[g]+'"></i>Bảng '+g+' · Sân '+(GROUPS.indexOf(g)+1)+'</div>'+list.map(finRow).join('');
  });
  h+='</div>';
+ if(f.orphans&&f.orphans.length){h+='<div class="ft"><div class="fh"><span>Đã nộp nhưng không còn trong danh sách</span><em>'+f.orphans.length+' người</em></div>'+f.orphans.map(function(o){return '<div class="fe"><div><b>'+esc(o.name)+'</b><small>Cần xử lý hoàn tiền hoặc chuyển cho người thay thế</small></div><div class="amt ok">'+vnd((o.r.a||0)+(o.r.b||0))+'</div></div>';}).join('')+'</div>';}
  h+='<div class="ft"><div class="fh"><span>Thu khác / tài trợ ngoài</span><em>'+vnd(f.other)+'</em></div>'+entryRows('thukhac:')+'</div>';
  if(S.btc)h+='<button class="btn alt" style="margin:-2px 0 12px" data-fin="thukhac:new">+ Thêm khoản thu khác</button>';
  h+='<div class="ft"><div class="fh"><span>Các khoản chi</span><em>'+vnd(f.chi)+'</em></div>'+entryRows('chi:')+'</div>';
@@ -772,6 +806,9 @@ function buildRows(){
   rows.push([m.id,'Giải '+m.gi+' - '+m.lab,a.team?tname(a.team):a.label,b.team?tname(b.team):b.label,r&&r.a!=null?r.a:'',r&&r.b!=null?r.b:'','']);});
  GROUPS.forEach(function(g){var r=S.res['draw:'+g];if(r&&r.note)rows.push(['draw:'+g,'Bốc thăm bảng '+g,'','','','',r.note]);});
  ATH.forEach(function(a){var r=S.res['thu:'+a.id];rows.push(['thu:'+a.id,'Thu VĐV - Bảng '+a.g,a.name,a.team,r&&r.a>0?r.a:'',r&&r.b>0?r.b:'',r&&r.note||'']);});
+ var inR={};ATH.forEach(function(a){inR[a.id]=1;});
+ Object.keys(S.res).forEach(function(k){if(k.indexOf('thu:')!==0)return;var nm=k.slice(4),r=S.res[k];if(inR[nm]||!r||!(r.a>0||r.b>0||r.note))return;rows.push([k,'Thu VĐV - không còn trong danh sách',nm,'',r.a>0?r.a:'',r.b>0?r.b:'',r.note||'']);});
+ GROUPS.forEach(function(g){TEAMS[g].forEach(function(t,i){rows.push(['doi:'+g+(i+1),'Bảng '+g+' - Đôi '+(i+1)+' (SỬA TÊN ĐÔI Ở CỘT doi_1)',t,'','','','']);});});
  finIds('thukhac:').forEach(function(k){var r=S.res[k];rows.push([k,'Thu khác / tài trợ ngoài',r.p||'',r.q||'',r.a||'','',r.note||'']);});
  finIds('chi:').forEach(function(k){var r=S.res[k];rows.push([k,'Chi',r.p||'',r.q||'',r.a||'','',r.note||'']);});
  return rows;
@@ -799,16 +836,25 @@ function rowsToRes(rows){
  var hd=(rows.shift()||[]).map(function(h){return String(h).trim().toLowerCase();});
  function ix(n,d){var k=hd.indexOf(n);return k<0?d:k;}
  var I={ma:ix('ma',0),d1:ix('doi_1',2),a:ix('diem_1',4),b:ix('diem_2',5),n:ix('boc_tham',6)};
- var res={},upd=null;
+ var res={},upd=null,legacyThu={};
  rows.forEach(function(r){var id=(r[I.ma]||'').trim();if(!id)return;
   if(id==='meta:updated'){upd=(r[I.d1]||'').trim();return;}
   if(id.indexOf('draw:')===0){var nt=(r[I.n]||'').trim();if(nt&&/^draw:[A-D]$/.test(id))res[id]={a:null,b:null,note:nt};return;}
+  var dm=/^doi:([A-D])([1-5])$/.exec(id);
+  if(dm){var tn=(r[I.d1]||'').trim();if(tn)res[id]={a:null,b:null,note:tn};return;}
   var fm=/^(thu|thukhac|chi):(.+)$/.exec(id);
   if(fm){
-   if(fm[1]==='thu'&&!ATH.some(function(x){return x.id===fm[2];}))return;
    if(fm[1]!=='thu'&&!/^\d+$/.test(fm[2]))return;
    var ma=num(r[I.a]),mb=num(r[I.b]),nt2=(r[I.n]||'').trim();
-   if(fm[1]==='thu'){if(!(ma>0)&&!(mb>0)&&!nt2)return;res[id]={a:ma>0?ma:null,b:mb>0?mb:null,note:nt2};}
+   if(fm[1]==='thu'){
+    var key=fm[2],legacy=false;
+    if(/^[A-D][1-5][ab]$/.test(key)){key=OLD_ATH[key];legacy=true;if(!key)return;}
+    if(key.length>60)return;
+    if(!(ma>0)&&!(mb>0)&&!nt2)return;
+    var rec={a:ma>0?ma:null,b:mb>0?mb:null,note:nt2};
+    if(legacy){legacyThu['thu:'+key]=rec;}else{res['thu:'+key]=rec;}
+    return;
+   }
    else{if(!(ma>0))return;res[id]={a:ma,b:null,note:nt2,p:(r[I.d1]||'').trim(),q:(r[I.d1+1]||'').trim()};}
    return;
   }
@@ -816,6 +862,7 @@ function rowsToRes(rows){
   var a=parseInt(r[I.a],10),b=parseInt(r[I.b],10);
   if(isNaN(a)||isNaN(b)||a<0||b<0||a>19||b>19||a===b)return;
   res[id]={a:a,b:b,note:null};});
+ Object.keys(legacyThu).forEach(function(k){if(!res[k])res[k]=legacyThu[k];});
  return{res:res,updated:upd,count:Object.keys(res).length};
 }
 function cleanName(v){
@@ -949,7 +996,7 @@ function pullSheet(){
    S.res=S.local;persist(true);
   }else S.res=S.remote;
   try{localStorage.setItem(STORE+'-remote',JSON.stringify({res:S.remote,updated:S.updated}));}catch(e){}
-  return{changed:JSON.stringify([S.remote,S.local])!==before,rows:rows.length};
+  return{changed:JSON.stringify([S.remote,S.local])!==before,rows:rows.length,hasRoster:Object.keys(p.res).some(function(k){return k.indexOf('doi:')===0;})};
  });
 }
 var stoken=0,sbusyAt=0;
@@ -962,7 +1009,7 @@ function syncSheet(){
  if(S.btc&&S.key)p=pushNow();
  return p.then(pullSheet).then(function(i){
   info=i;S.sync.st='ok';S.sync.t=Date.now();S.sync.msg='';
-  var seed=S.btc&&S.key&&i.rows<=1&&!S.seeding;
+  var seed=S.btc&&S.key&&(i.rows<=1||!i.hasRoster)&&!S.seeding;
   if(seed){S.seeding=true;return fullPush().then(function(){S.seeding=false;toast('Đã tạo dữ liệu trên Google Sheet');},function(e){S.seeding=false;throw e;});}
  }).then(function(){
   var first=!S.shown;S.shown=true;
@@ -1386,7 +1433,7 @@ var hm=location.hash.match(/sheet=([^&]+)/);
 if(hm){try{S.sheetUrl=decodeURIComponent(hm[1]);localStorage.setItem(STORE+'-sheet',S.sheetUrl);history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}}
 if(S.btc&&SURL()&&!S.key){S.btc=false;S.res=S.remote;}
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-window.__app={diffSheet:diffSheet,refreshView:refreshView,syncSheet:syncSheet,changedIds:changedIds,fullPush:fullPush,SURL:SURL,finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
+window.__app={applyRoster:applyRoster,TEAMS:TEAMS,diffSheet:diffSheet,refreshView:refreshView,syncSheet:syncSheet,changedIds:changedIds,fullPush:fullPush,SURL:SURL,finCalc:finCalc,ATH:ATH,saveCSV:saveCSV,cleanName:cleanName,toCSV:toCSV,parseCSV:parseCSV,allHTML:allHTML,fetchRemote:fetchRemote,S:S,CACHE:function(){return CACHE;},slot:slot,podium:podium,validate:validate,render:render,persist:persist,summary:summary,gmatches:gmatches,composeImage:composeImage,loadFonts:loadFonts,ROUNDS:ROUNDS};
 render();loadFonts();
 tick();
 function stale(ms){return Date.now()-(S.pulledAt||S.remoteAt||0)>ms;}
